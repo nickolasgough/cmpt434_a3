@@ -27,7 +27,7 @@ void move_randomly(coords* pos, int dist) {
     int* a = axis == 0 ? &pos->x : &pos->y;
     int d = dir == 0 ? 1 : -1;
 
-    *a = d * dist;
+    *a += d * dist;
 
     if (*a < BOUNDS_MIN) {
         *a = abs(*a);
