@@ -21,8 +21,8 @@ void pos_randomly(coords* pos) {
 
 
 void move_randomly(coords* pos, int dist) {
-    int axis = (rand() % DIR_MAX) + 1;
-    int dir = (rand() % DIR_MAX) + 1;
+    int axis = rand() % DIR_MAX;
+    int dir = rand() % DIR_MAX;
 
     int* a = axis == 0 ? &pos->x : &pos->y;
     int d = dir == 0 ? 1 : -1;
