@@ -175,6 +175,7 @@ int main(int argc, char* argv[]) {
             /* Determine within range */
             memset(message, 0, MSG_SIZE);
             recv(loggerFd, message, MSG_SIZE, 0);
+            printf("received: %s\n", message);
             if (strcmp(message, "in range") == 0) {
                 printf("process: in range\n");
             } else {
