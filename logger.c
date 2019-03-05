@@ -90,11 +90,10 @@ int main(int argc, char* argv[]) {
         memset(message, 0, MSG_SIZE);
         rLen = recv(clientFd, message, MSG_SIZE, 0);
         while (rLen > 0) {
-            printf("logger got message %s\n", message);
-
-            memset(message, 0, MSG_SIZE);
-            sprintf(message, "response");
-            send(clientFd, message, MSG_SIZE, 0);
+            printf("logger got id %d\n", message[0]);
+            printf("logger got port %s\n", message[1]);
+            printf("logger got x %d\n", message[7]);
+            printf("logger got y %d\n", message[12]);
 
             memset(message, 0, MSG_SIZE);
             rLen = recv(clientFd, message, MSG_SIZE, 0);

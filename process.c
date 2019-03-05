@@ -14,6 +14,23 @@
 #include "common.h"
 
 
+void pos_randomly(coords* pos) {
+    pos->x = (rand() % BOUNDS_MAX) + 1;
+    pos->y = (rand() % BOUNDS_MAX) + 1;
+}
+
+
+void move_randomly(coords* pos, int dist) {
+    int dir = (rand() % DIR_MAX) + 1;
+    if (dir == 0) {
+        pos->x += dist;
+    }
+    if (dir == 1) {
+        pos->y += dist;
+    }
+}
+
+
 int main(int argc, char* argv[]) {
     int id;
     char* data;
@@ -36,6 +53,12 @@ int main(int argc, char* argv[]) {
     char* message;
     int rLen;
 
+    fd_set fds;
+    struct timeval tv;
+    int sVal;
+
+    coords loc;
+
     if (argc != 7) {
         printf("usage: ./process <ID> <data> <D> <process port> <logger address> <logger port>\n");
         exit(1);
@@ -43,8 +66,8 @@ int main(int argc, char* argv[]) {
 
     /* Arguments and binding */
     id = atoi(argv[1]);
-    if (id < 0) {
-        printf("process: id must be greater than or equal to zero\n");
+    if (id < ID_MIN || id > ID_MAX) {
+        printf("process: id must be between %d and %d\n", ID_MIN, ID_MAX);
         exit(1);
     }
     data = argv[2];
@@ -53,7 +76,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
     D = atoi(argv[3]);
-    if (D <= BOUND_MIN || D >= BOUND_MAX) {
+    if (D <= BOUNDS_MIN || D >= BOUNDS_MAX) {
         printf("process: distance must be less than the bounds\n");
         exit(1);
     }
@@ -97,29 +120,53 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    /* Establish logger connection */
-    loggerFd = tcp_socket(&loggerInfo, lName, lPort);
-    if (loggerFd < 0) {
-        printf("process: failed to create tcp socket for given logger\n");
-        exit(1);
-    }
-    if (connect(loggerFd, loggerInfo->ai_addr, loggerInfo->ai_addrlen) == -1) {
-        printf("process: failed to connect tcp socket for given logger\n");
-        exit(1);
-    }
-
     message = calloc(MSG_SIZE, sizeof(char));
     if (message == NULL) {
         printf("process: failed to allocate necessary memory\n");
         exit(1);
     }
 
-    while (1) {
-        sprintf(message, "hello");
-        send(loggerFd, message, MSG_SIZE, 0);
+    /* Randomly position process */
+    pos_randomly(&loc);
 
-        memset(message, 0, MSG_SIZE);
-        recv(loggerFd, message, MSG_SIZE, 0);
-        printf("process got message: %s\n", message);
+    /* Begin simulated movement */
+    while (1) {
+        FD_ZERO(&fds);
+        FD_SET(STD_IN, &fds);
+        FD_SET(sockFd, &fds);
+
+        tv.tv_sec = TIME_MIN;
+        tv.tv_usec = 0;
+        sVal = select(sockFd + 1, &fds, NULL, NULL, &tv);
+
+        if (sVal != 0) {
+            /* Handle incoming connection */
+        } else {
+            /* Handle timeout reaction */
+            /* Move randomly */
+            move_randomly(&loc, D);
+
+            /* Connect with logger */
+            loggerFd = tcp_socket(&loggerInfo, lName, lPort);
+            if (loggerFd < 0) {
+                printf("process: failed to create tcp socket for given logger\n");
+                exit(1);
+            }
+            if (connect(loggerFd, loggerInfo->ai_addr, loggerInfo->ai_addrlen) == -1) {
+                printf("process: failed to connect tcp socket for given logger\n");
+                exit(1);
+            }
+
+            /* Send relevant data */
+            memset(message, 0, MSG_SIZE);
+            message[0] = (char) id;
+            sprintf(&message[1], "%s", pPort);
+            sprintf(&message[7], "%d", loc.x);
+            sprintf(&message[12], "%d", loc.y);
+            send(loggerFd, message, MSG_SIZE, 0);
+
+            /* Disconnect from logger */
+            close(loggerFd);
+        }
     }
 }

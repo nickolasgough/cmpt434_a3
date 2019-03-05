@@ -8,8 +8,21 @@
 
 #define MSG_SIZE 1000
 
-#define BOUND_MIN 0
-#define BOUND_MAX 1000
+#define ID_MIN 0
+#define ID_MAX 256
+
+#define TIME_MIN 1
+
+#define DIR_MAX 2
+
+#define BOUNDS_MIN 0
+#define BOUNDS_MAX 1000
+
+
+typedef struct {
+    int x;
+    int y;
+} coords;
 
 
 int check_port(char* port);
