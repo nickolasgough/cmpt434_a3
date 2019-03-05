@@ -118,8 +118,8 @@ int main(int argc, char* argv[]) {
         /* Determine within range */
         pLoc.x = atoi(&message[7]);
         pLoc.y = atoi(&message[12]);
-        printf("logger got x %s\n", pLoc.x);
-        printf("logger got y %s\n", pLoc.y);
+        printf("logger got x %d\n", pLoc.x);
+        printf("logger got y %d\n", pLoc.y);
         memset(message, 0, MSG_SIZE);
         if (in_range(&pLoc, T)) {
             sprintf(message, "%s", "in range");                
