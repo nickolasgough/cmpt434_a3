@@ -114,12 +114,12 @@ int main(int argc, char* argv[]) {
         /* Handle initial message */
         printf("logger got id %d\n", message[0]);
         printf("logger got port %s\n", &message[1]);
-        printf("logger got x %s\n", &message[7]);
-        printf("logger got y %s\n", &message[12]);
 
         /* Determine within range */
         pLoc.x = atoi(&message[7]);
         pLoc.y = atoi(&message[12]);
+        printf("logger got x %s\n", pLoc.x);
+        printf("logger got y %s\n", pLoc.y);
         memset(message, 0, MSG_SIZE);
         if (in_range(&pLoc, T)) {
             sprintf(message, "%s", "in range");                
