@@ -18,11 +18,21 @@
 #define BOUNDS_MIN 0
 #define BOUNDS_MAX 1000
 
+#define BASE_X 500
+#define BASE_Y 500
+
 
 typedef struct {
     int x;
     int y;
 } coords;
+
+typedef struct {
+    int id;
+    char* port;
+    coords loc;
+    char* data;
+} proc;
 
 
 int check_port(char* port);

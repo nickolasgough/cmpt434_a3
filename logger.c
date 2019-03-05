@@ -10,8 +10,16 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <string.h>
+#include <math.h>
 
 #include "common.h"
+
+
+int in_range(coords* pos, int dist) {
+    int xSq  = pow(BASE_X - pos->x, 2);
+    int ySq = pow(BASE_Y - pos->y, 2);
+    return (xSq + ySq) <= dist;
+}
 
 
 int main(int argc, char* argv[]) {
@@ -29,6 +37,9 @@ int main(int argc, char* argv[]) {
 
     char* message;
     int rLen;
+
+    proc* procs;
+    coords pLoc;
 
     if (argc != 4) {
         printf("usage: ./logger <port> <T> <N>\n");
@@ -73,13 +84,23 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
+    /* Allocate the message */
     message = calloc(MSG_SIZE, sizeof(char));
     if (message == NULL) {
         printf("logger: failed to allocate necessary memory\n");
         exit(1);
     }
 
+    /* Allocate the processes */
+    procs = calloc(N, sizeof(proc));
+    if (procs == NULL) {
+        printf("logger: failed to allocate necessary processes\n");
+        exit(1);
+    }    
+
+    /* Handle incoming messages */
     while (1) {
+        /* Handle new connection */
         clientLen = sizeof(clientAddr);
         clientFd = accept(sockFd, &clientAddr, &clientLen);
         if (clientFd < 0) {
@@ -87,14 +108,28 @@ int main(int argc, char* argv[]) {
             exit(1);
         }
 
+        /* Handle connection requests */
         memset(message, 0, MSG_SIZE);
         rLen = recv(clientFd, message, MSG_SIZE, 0);
-        while (rLen > 0) {
-            printf("logger got id %d\n", message[0]);
-            printf("logger got port %s\n", &message[1]);
-            printf("logger got x %s\n", &message[7]);
-            printf("logger got y %s\n", &message[12]);
 
+        /* Handle initial message */
+        printf("logger got id %d\n", message[0]);
+        printf("logger got port %s\n", &message[1]);
+        printf("logger got x %s\n", &message[7]);
+        printf("logger got y %s\n", &message[12]);
+
+        /* Determine within range */
+        pLoc.x = atoi(&message[7]);
+        pLoc.y = atoi(&message[12]);
+        memset(message, 0, MSG_SIZE);
+        if (in_range(&pLoc, T)) {
+            sprintf(message, "%s", "in range");                
+        } else {
+            sprintf(message, "%s", "out of range");
+        }
+        send(clientFd, message, MSG_SIZE, 0);
+
+        while (rLen > 0) {
             memset(message, 0, MSG_SIZE);
             rLen = recv(clientFd, message, MSG_SIZE, 0);
         }

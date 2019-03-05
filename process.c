@@ -10,6 +10,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <string.h>
+#include <math.h>
 
 #include "common.h"
 
@@ -171,6 +172,15 @@ int main(int argc, char* argv[]) {
             sprintf(&message[7], "%d", loc.x);
             sprintf(&message[12], "%d", loc.y);
             send(loggerFd, message, MSG_SIZE, 0);
+
+            /* Determine within range */
+            memset(message, 0, MSG_SIZE);
+            recv(loggerFd, message, MSG_SIZE, 0);
+            if (strcmp(message, "in range") == 0) {
+                printf("process: in range\n");
+            } else {
+                printf("process: out of range\n");
+            }
 
             /* Disconnect from logger */
             close(loggerFd);
