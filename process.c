@@ -21,12 +21,19 @@ void pos_randomly(coords* pos) {
 
 
 void move_randomly(coords* pos, int dist) {
+    int axis = (rand() % DIR_MAX) + 1;
     int dir = (rand() % DIR_MAX) + 1;
-    if (dir == 0) {
-        pos->x += dist;
+
+    int* a = axis == 0 ? &pos->x : &pos->y;
+    int d = dir == 0 ? 1 : -1;
+
+    *a = d * dist;
+
+    if (*a < BOUNDS_MIN) {
+        *a = abs(*a);
     }
-    if (dir == 1) {
-        pos->y += dist;
+    if (*a > BOUNDS_MAX) {
+        *a = (2 * BOUNDS_MAX) - *a;
     }
 }
 
