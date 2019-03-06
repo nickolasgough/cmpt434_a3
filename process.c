@@ -226,8 +226,7 @@ int main(int argc, char* argv[]) {
                 recv(procFd, message, MSG_SIZE, 0);
                 
                 numP = atoi(message);
-                printf("%d\n", numP);
-                for (n = 0; n > numP; n += 1) {
+                for (n = 0; n < numP; n += 1) {
                     memset(message, 0, MSG_SIZE);
                     recv(procFd, message, MSG_SIZE, 0);
 
