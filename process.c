@@ -211,10 +211,10 @@ int main(int argc, char* argv[]) {
                 memset(message, 0, MSG_SIZE);
                 recv(loggerFd, message, MSG_SIZE, 0);
                 if (strcmp(message, "in range") == 0) {
-                    // Transmit all packets
+                    /* Transmit all packets */
                     printf("process: in range\n");
                 } else {
-                    // Exchange data packets
+                    /* Exchange data packets */
                     memset(message, 0, MSG_SIZE);
                     sprintf(message, "next");
                     send(loggerFd, message, MSG_SIZE, 0);
