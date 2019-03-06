@@ -266,6 +266,10 @@ int main(int argc, char* argv[]) {
                     recv(procFd, message, MSG_SIZE, 0);
                 }
 
+                for (n = 0; n < bCount; n += 1) {
+                    printf("%d - %s\n", buffer[n][0], &buffer[n][1]);
+                }
+
                 close(procFd);
             }
             if (FD_ISSET(loggFd, &fds)) {
