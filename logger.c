@@ -55,8 +55,10 @@ int main(int argc, char* argv[]) {
     socklen_t procLen;
 
     char* message;
+    char* temp;
 
     proc** pProcs;
+    int pCount;
     int pId;
     proc* cProc;
     proc* nProc;
@@ -64,6 +66,7 @@ int main(int argc, char* argv[]) {
     coords bLoc;
 
     int n;
+    int numP;
 
     if (argc != 4) {
         printf("usage: ./logger <port> <T> <N>\n");
@@ -132,7 +135,8 @@ int main(int argc, char* argv[]) {
     }
 
     /* Handle incoming messages */
-    while (1) {
+    pCount = 0;
+    while (pCount < N) {
         /* Handle new connection */
         procLen = sizeof(procAddr);
         procFd = accept(sockFd, &procAddr, &procLen);
@@ -175,7 +179,34 @@ int main(int argc, char* argv[]) {
         memset(message, 0, MSG_SIZE);
         recv(procFd, message, MSG_SIZE, 0);
         if (strcmp(message, "next") != 0) {
-            /* Receive all packets */
+            /* Receive each packet */
+            numP = atoi(message);
+            for (n = 0; n < numP; n += 1) {
+                memset(message, 0, MSG_SIZE);
+                recv(procFd, message, MSG_SIZE, 0);
+
+                /* Buffer given packet */
+                for (n = 0; n < N; n += 1) {
+                    cProc = pProcs[n];
+                    if ((int) message[0] == cProc->id) {
+                        temp = calloc(MSG_SIZE, sizeof(char));
+                        if (temp == NULL) {
+                            printf("logger: failed to allocate necessary memory\n");
+                            exit(1);
+                        }
+
+                        sprintf(temp, "%s", &message[1]);
+                        cProc->data = temp;
+                        pCount += 1;
+                        break;
+                    }
+                }
+
+                /* Request next packet */
+                memset(message, 0, MSG_SIZE);
+                sprintf(message, "next");
+                send(procFd, message, MSG_SIZE, 0);
+            }
         } else {
             for (n = 0; n < N; n += 1) {
                 nProc = pProcs[n];
@@ -202,4 +233,13 @@ int main(int argc, char* argv[]) {
             send(procFd, message, MSG_SIZE, 0);
         }
     }
+
+    /* Print simulation stats */
+    printf("logger: epidemic simulation complete\n");
+    for (n = 0; n < N; n += 1) {
+        cProc = pProcs[n];
+        printf("process %d contained data %s\n", cProc->id, cProc->data);
+    }
+
+    return 0;
 }

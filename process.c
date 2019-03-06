@@ -167,8 +167,7 @@ int main(int argc, char* argv[]) {
         if (sVal != 0) {
             /* Ignore for timeout */
         } else {
-            /* Handle timeout reaction */
-            /* Move process randomly */
+            /* Position process randomly */
             if (firstIter) {
                 firstIter = 0;
                 pos_randomly(&p.loc);
@@ -214,7 +213,7 @@ int main(int argc, char* argv[]) {
             }
 
             if (FD_ISSET(sockFd, &fds)) {
-                /* Handle new connection */
+                /* Accept process connection */
                 procLen = sizeof(procAddr);
                 procFd = accept(sockFd, &procAddr, &procLen);
                 if (procFd < 0) {
@@ -222,14 +221,17 @@ int main(int argc, char* argv[]) {
                     exit(1);
                 }
 
+                /* Receive packer count */
                 memset(message, 0, MSG_SIZE);
                 recv(procFd, message, MSG_SIZE, 0);
                 
+                /* Receive each packet */
                 numP = atoi(message);
                 for (n = 0; n < numP; n += 1) {
                     memset(message, 0, MSG_SIZE);
                     recv(procFd, message, MSG_SIZE, 0);
 
+                    /* Buffer given packet */
                     for (n = 0; n < BUF_SIZE; n += 1) {
                         temp = buffer[n];
                         if (temp == NULL) {
@@ -250,15 +252,18 @@ int main(int argc, char* argv[]) {
                         }
                     }
 
+                    /* Request next packet */
                     memset(message, 0, MSG_SIZE);
                     sprintf(message, "next");
                     send(procFd, message, MSG_SIZE, 0);
                 }
 
+                /* Send packet count */
                 memset(message, 0, MSG_SIZE);
                 sprintf(message, "%d", bCount);
                 send(procFd, message, MSG_SIZE, 0);
 
+                /* Send each packet */
                 for (n = 0; n < bCount; n += 1) {
                     send(procFd, buffer[n], MSG_SIZE, 0);
 
@@ -266,28 +271,39 @@ int main(int argc, char* argv[]) {
                     recv(procFd, message, MSG_SIZE, 0);
                 }
 
-                for (n = 0; n < bCount; n += 1) {
-                    printf("%d - %s\n", buffer[n][0], &buffer[n][1]);
-                }
-
+                /* Terminate connection */
                 close(procFd);
             }
             if (FD_ISSET(loggFd, &fds)) {
-                /* Determine within range */
+                /* Receive logger's diagnosis */
                 memset(message, 0, MSG_SIZE);
                 recv(loggFd, message, MSG_SIZE, 0);
+
+                /* Logger or process */
                 if (strcmp(message, "in range") == 0) {
-                    /* Transmit all packets */
-                    printf("process: in range\n");
+                    /* Send packet count */
+                    memset(message, 0, MSG_SIZE);
+                    sprintf(message, "%d", bCount);
+                    send(loggFd, message, MSG_SIZE, 0);
+
+                    /* Send each packet */
+                    for (n = 0; n < bCount; n += 1) {
+                        send(loggFd, buffer[n], MSG_SIZE, 0);
+
+                        memset(message, 0, MSG_SIZE);
+                        recv(loggFd, message, MSG_SIZE, 0);
+                    }
                 } else {
-                    /* Exchange data packets */
+                    /* Request next process */
                     memset(message, 0, MSG_SIZE);
                     sprintf(message, "next");
                     send(loggFd, message, MSG_SIZE, 0);
 
+                    /* Handle each process */
                     memset(message, 0, MSG_SIZE);
                     recv(loggFd, message, MSG_SIZE, 0);
                     while (strcmp(message, "end") != 0) {
+                        /* Connect to process */
                         procFd = tcp_socket(&procInfo, &message[0], &message[14]);
                         if (sockFd < 0) {
                             printf("process: failed to create tcp socket for given process\n");
@@ -298,10 +314,12 @@ int main(int argc, char* argv[]) {
                             exit(1);
                         }
 
+                        /* Send packet count */
                         memset(message, 0, MSG_SIZE);
                         sprintf(message, "%d", bCount);
                         send(procFd, message, MSG_SIZE, 0);
 
+                        /* Send each packet */
                         for (n = 0; n < bCount; n += 1) {
                             send(procFd, buffer[n], MSG_SIZE, 0);
 
@@ -309,14 +327,17 @@ int main(int argc, char* argv[]) {
                             recv(procFd, message, MSG_SIZE, 0);
                         }
 
+                        /* Receive packet count */
                         memset(message, 0, MSG_SIZE);
                         recv(procFd, message, MSG_SIZE, 0);
 
+                        /* Receive each packet */
                         numP = atoi(message);
                         for (n = 0; n < numP; n += 1) {
                             memset(message, 0, MSG_SIZE);
                             recv(procFd, message, MSG_SIZE, 0);
 
+                            /* Buffer given packet */
                             for (n = 0; n < BUF_SIZE; n += 1) {
                                 temp = buffer[n];
                                 if (temp == NULL) {
@@ -336,21 +357,21 @@ int main(int argc, char* argv[]) {
                                 }
                             }
 
+                            /* Request next packet */
                             memset(message, 0, MSG_SIZE);
                             sprintf(message, "next");
                             send(procFd, message, MSG_SIZE, 0);
                         }
 
+                        /* Terminate connection */
                         close(procFd);
 
-                        for (n = 0; n < bCount; n += 1) {
-                            printf("%d - %s\n", buffer[n][0], &buffer[n][1]);
-                        }
-
+                        /* Request next process */
                         memset(message, 0, MSG_SIZE);
                         sprintf(message, "next");
                         send(loggFd, message, MSG_SIZE, 0);
 
+                        /* Receive next process */
                         memset(message, 0, MSG_SIZE);
                         recv(loggFd, message, MSG_SIZE, 0);
                     }
