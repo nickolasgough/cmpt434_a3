@@ -191,6 +191,9 @@ int main(int argc, char* argv[]) {
                     message[0] = (char) nProc->id;
                     sprintf(&message[1], "%s", nProc->data);
                     send(procFd, message, MSG_SIZE, 0);
+
+                    memset(message, 0, MSG_SIZE);
+                    recv(procFd, message, MSG_SIZE, 0);
                 }
             }
 
