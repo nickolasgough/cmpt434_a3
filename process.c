@@ -243,6 +243,9 @@ int main(int argc, char* argv[]) {
                         printf("process: received data packet ID %d\n", (int) message[0]);
                         printf("process: received data packet content %s\n", &message[1]);
 
+                        sprintf(message, "next");
+                        send(loggerFd, message, MSG_SIZE, 0);
+
                         memset(message, 0, MSG_SIZE);
                         recv(loggerFd, message, MSG_SIZE, 0);
                     }
