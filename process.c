@@ -242,6 +242,7 @@ int main(int argc, char* argv[]) {
                             temp[0] = message[0];
                             sprintf(&temp[1], "%s", &message[1]);
                             buffer[n] = temp;
+                            bCount += 1;
                             break;
                         }
                         if (temp[0] == message[0]) {
@@ -324,6 +325,7 @@ int main(int argc, char* argv[]) {
                                     sprintf(temp, "%s", message);
                                     buffer[n] = temp;
                                     bCount += 1;
+                                    break;
                                 }
                                 if (temp[0] == message[0]) {
                                     break;
