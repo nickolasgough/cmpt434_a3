@@ -50,9 +50,9 @@ int main(int argc, char* argv[]) {
 
     int sockFd;
     struct addrinfo* sockInfo;
-    int clientFd;
-    struct sockaddr clientAddr;
-    socklen_t clientLen;
+    int procFd;
+    struct sockaddr procAddr;
+    socklen_t procLen;
 
     char* message;
     int rLen;
@@ -135,16 +135,16 @@ int main(int argc, char* argv[]) {
     /* Handle incoming messages */
     while (1) {
         /* Handle new connection */
-        clientLen = sizeof(clientAddr);
-        clientFd = accept(sockFd, &clientAddr, &clientLen);
-        if (clientFd < 0) {
+        procLen = sizeof(procAddr);
+        procFd = accept(sockFd, &procAddr, &procLen);
+        if (procFd < 0) {
             printf("logger: failed to accept incoming connection on socket\n");
             exit(1);
         }
 
         /* Handle connection requests */
         memset(message, 0, MSG_SIZE);
-        rLen = recv(clientFd, message, MSG_SIZE, 0);
+        rLen = recv(procFd, message, MSG_SIZE, 0);
 
         /* Handle initial message */
         pId = (int) message[0];
@@ -171,10 +171,10 @@ int main(int argc, char* argv[]) {
             sprintf(message, "%s", "out of range");
         }
         printf("process is %s of base station\n", message);
-        send(clientFd, message, MSG_SIZE, 0);
+        send(procFd, message, MSG_SIZE, 0);
 
         memset(message, 0, MSG_SIZE);
-        recv(clientFd, message, MSG_SIZE, 0);
+        recv(procFd, message, MSG_SIZE, 0);
         if (strcmp(message, "next") != 0) {
             /* Receive all packets */
         } else {
@@ -188,9 +188,13 @@ int main(int argc, char* argv[]) {
                     memset(message, 0, MSG_SIZE);
                     message[0] = (char) nProc->id;
                     sprintf(&message[1], "%s", nProc->data);
-                    send(clientFd, message, MSG_SIZE, 0);
+                    send(procFd, message, MSG_SIZE, 0);
                 }
             }
+
+            memset(message, 0, MSG_SIZE);
+            sprintf(message, "end");
+            send(procFd, message, MSG_SIZE, 0);
         }
     }
 }
