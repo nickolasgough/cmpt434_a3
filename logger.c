@@ -65,7 +65,7 @@ int main(int argc, char* argv[]) {
 
     coords bLoc;
 
-    int n;
+    int n, c;
     int numP;
 
     if (argc != 4) {
@@ -186,6 +186,29 @@ int main(int argc, char* argv[]) {
                 memset(message, 0, MSG_SIZE);
                 recv(procFd, message, MSG_SIZE, 0);
                 printf("%d - %s\n", (int) message[0], &message[1]);
+
+                /* Buffer given packet */
+                for (c = 0; c < N; c += 1) {
+                    cProc = pProcs[c];
+
+                    if (cProc == NULL) {
+                        continue;
+                    }
+                    if ((int) message[0] == cProc->id) {
+                        if (cProc->data == NULL) {
+                            temp = calloc(MSG_SIZE, sizeof(char));
+                            if (temp == NULL) {
+                                printf("logger: failed to allocate necessary memory\n");
+                                exit(1);
+                            }
+
+                            sprintf(temp, "%s", &message[1]);
+                            cProc->data = temp;
+                            pCount += 1;
+                            break;
+                        }
+                    }
+                }
 
                 /* Request next packet */
                 memset(message, 0, MSG_SIZE);
