@@ -181,9 +181,12 @@ int main(int argc, char* argv[]) {
         if (strcmp(message, "next") != 0) {
             /* Receive each packet */
             numP = atoi(message);
+            printf("%d\n", numP);
             for (n = 0; n < numP; n += 1) {
                 memset(message, 0, MSG_SIZE);
                 recv(procFd, message, MSG_SIZE, 0);
+                printf("%d - %s\n", (int) message[0], &message[1]);
+                continue;
 
                 /* Buffer given packet */
                 for (n = 0; n < N; n += 1) {
