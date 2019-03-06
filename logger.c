@@ -15,11 +15,29 @@
 #include "common.h"
 
 
-int in_range(coords* pos, int dist) {
-    int xSq  = pow(BASE_X - pos->x, 2);
-    int ySq = pow(BASE_Y - pos->y, 2);
+int in_range(coords* src, coords* dest, int dist) {
+    int xSq  = pow(dest->x - src->x, 2);
+    int ySq = pow(dest->y - src->y, 2);
     int res = sqrt(xSq + ySq);
     return res <= dist;
+}
+
+
+proc* alloc_proc() {
+    proc* pProc = calloc(1, sizeof(proc));
+    if (pProc == NULL) {
+        printf("logger: failed to allocate necessary process\n");
+        exit(1);
+    }
+
+    pProc->address = calloc(MSG_SIZE, sizeof(char));
+    pProc->port = calloc(MSG_SIZE, sizeof(char));
+    if (pProc->address == NULL || pProc->port == NULL) {
+        printf("logger: failed to allocate necessary memory\n");
+        exit(1);
+    }
+
+    return pProc;
 }
 
 
@@ -39,9 +57,12 @@ int main(int argc, char* argv[]) {
     char* message;
     int rLen;
 
-    proc* procs;
+    proc** pProcs;
     int pId;
     proc* cProc;
+    proc* nProc;
+
+    coords bLoc;
 
     int n;
 
@@ -57,9 +78,13 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
     T = atoi(argv[2]);
+    if (T < BOUNDS_MIN || T > BOUNDS_MAX) {
+        printf("logger: T must be between %d and %d\n", BOUNDS_MIN, BOUNDS_MAX);
+        exit(1);
+    }
     N = atoi(argv[3]);
-    if (T < 1 && N < 1) {
-        printf("logger: T and N must be greater than zero\n");
+    if (N <= ID_MIN || N >= ID_MAX) {
+        printf("logger: N must be between %d and %d\n", ID_MIN + 1, ID_MAX - 1);
         exit(1);
     }
 
@@ -96,20 +121,15 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
+    /* Set base location */
+    bLoc.x = BASE_X;
+    bLoc.y = BASE_Y;
+
     /* Allocate the processes */
-    procs = calloc(N, sizeof(proc));
-    if (procs == NULL) {
+    pProcs = calloc(N, sizeof(proc*));
+    if (pProcs == NULL) {
         printf("logger: failed to allocate necessary processes\n");
         exit(1);
-    }
-    for (n = 0; n < N; n += 1) {
-        cProc = &procs[n];
-        cProc->address = calloc(MSG_SIZE, sizeof(char));
-        cProc->port = calloc(MSG_SIZE, sizeof(char));
-        if (cProc->address == NULL || cProc->port == NULL) {
-            printf("logger: failed to allocate necessary memory\n");
-            exit(1);
-        }
     }
 
     /* Handle incoming messages */
@@ -128,7 +148,12 @@ int main(int argc, char* argv[]) {
 
         /* Handle initial message */
         pId = (int) message[0];
-        cProc = &procs[pId];
+        cProc = pProcs[pId];
+        if (cProc == NULL) {
+            cProc = alloc_proc();
+            pProcs[pId] = cProc;
+        }
+
         cProc->id = pId;
         sprintf(cProc->address, "%s", &message[1]);
         sprintf(cProc->port, "%s", &message[15]);
@@ -140,7 +165,7 @@ int main(int argc, char* argv[]) {
 
         /* Determine within range */
         memset(message, 0, MSG_SIZE);
-        if (in_range(&cProc->loc, T)) {
+        if (in_range(&bLoc, &cProc->loc, T)) {
             sprintf(message, "%s", "in range");
         } else {
             sprintf(message, "%s", "out of range");
@@ -148,9 +173,24 @@ int main(int argc, char* argv[]) {
         printf("process is %s of base station\n", message);
         send(clientFd, message, MSG_SIZE, 0);
 
-        while (rLen > 0) {
-            memset(message, 0, MSG_SIZE);
-            rLen = recv(clientFd, message, MSG_SIZE, 0);
+        memset(message, 0, MSG_SIZE);
+        recv(clientFd, message, MSG_SIZE, 0);
+        if (strcmp(message, "next") != 0) {
+            /* Receive all packets */
+        } else {
+            for (n = 0; n < N; n += 1) {
+                nProc = pProcs[n];
+                if (nProc->id == cProc->id) {
+                    continue;
+                }
+
+                if (in_range(&cProc->loc, &nProc->loc, T)) {
+                    memset(message, 0, MSG_SIZE);
+                    message[0] = (char) nProc->id;
+                    sprintf(&message[1], "%s", nProc->data);
+                    send(clientFd, message, MSG_SIZE, 0);
+                }
+            }
         }
     }
 }
