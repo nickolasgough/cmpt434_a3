@@ -176,7 +176,7 @@ int main(int argc, char* argv[]) {
             FD_SET(loggerFd, &fds);
             tv.tv_sec = TIME_MIN;
             tv.tv_usec = 0;
-            sVal = select(sockFd + 1, &fds, NULL, NULL, &tv);
+            sVal = select(loggerFd + 1, &fds, NULL, NULL, &tv);
 
             while (sVal == 0) {
                 FD_ZERO(&fds);
@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
                 FD_SET(loggerFd, &fds);
                 tv.tv_sec = TIME_MIN;
                 tv.tv_usec = 0;
-                sVal = select(sockFd + 1, &fds, NULL, NULL, &tv);
+                sVal = select(loggerFd + 1, &fds, NULL, NULL, &tv);
             }
 
             if (FD_ISSET(sockFd, &fds)) {
