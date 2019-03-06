@@ -131,8 +131,8 @@ int main(int argc, char* argv[]) {
         sprintf(cProc->port, "%s", &message[1]);
         cProc->loc.x = atoi(&message[7]);
         cProc->loc.y = atoi(&message[12]);
-        printf("logger: connected to %d\n", cProc->id);
-        printf("process located at coords (%d,%d)\n", cProc->loc.x, cProc->loc.y);
+        printf("logger: connected to process %d\n", cProc->id);
+        printf("process located at coords (%d, %d)\n", cProc->loc.x, cProc->loc.y);
 
         /* Determine within range */
         memset(message, 0, MSG_SIZE);
@@ -141,7 +141,7 @@ int main(int argc, char* argv[]) {
         } else {
             sprintf(message, "%s", "out of range");
         }
-        printf("process is %s\n", message);
+        printf("process is %s of base station\n", message);
         send(clientFd, message, MSG_SIZE, 0);
 
         while (rLen > 0) {
