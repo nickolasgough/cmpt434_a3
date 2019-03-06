@@ -42,7 +42,7 @@ int main(int argc, char* argv[]) {
     proc p;
     int D;
 
-    char hName[MSG_SIZE];
+    char* hName;
     char* lName;
     char* lPort;
 
@@ -99,7 +99,8 @@ int main(int argc, char* argv[]) {
 
     /* Find the hostname */
     p.address = calloc(MSG_SIZE, sizeof(char));
-    if (p.address == NULL) {
+    hName = calloc(MSG_SIZE, sizeof(char));
+    if (p.address == NULL || hName == NULL) {
         printf("process: failed to allocate necessary memory\n");
         exit(1);
     }

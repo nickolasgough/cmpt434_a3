@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     int T;
     int N;
 
-    char* name;
+    char* hName;
     char* port;
 
     int sockFd;
@@ -64,18 +64,18 @@ int main(int argc, char* argv[]) {
     }
 
     /* Find the hostname */
-    name = calloc(MSG_SIZE, sizeof(char));
-    if (name == NULL) {
+    hName = calloc(MSG_SIZE, sizeof(char));
+    if (hName == NULL) {
         printf("logger: failed to allocate necessary memory\n");
         exit(1);
     }
-    if (gethostname(name, MSG_SIZE) == -1) {
+    if (gethostname(hName, MSG_SIZE) == -1) {
         printf("logger: failed to determine the name of the machine\n");
         exit(1);
     }
 
     /* Establish port binding */
-    sockFd = tcp_socket(&sockInfo, name, port);
+    sockFd = tcp_socket(&sockInfo, hName, port);
     if (sockFd < 0) {
         printf("logger: failed to create tcp socket for given host\n");
         exit(1);
