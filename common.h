@@ -8,6 +8,8 @@
 
 #define MSG_SIZE 1000
 
+#define BUF_SIZE 10
+
 #define ID_MIN 0
 #define ID_MAX 256
 

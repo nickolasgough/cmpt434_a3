@@ -48,19 +48,23 @@ int main(int argc, char* argv[]) {
 
     int sockFd;
     struct addrinfo* sockInfo;
-    int loggerFd;
-    struct addrinfo* loggerInfo;
+    int loggFd;
+    struct addrinfo* loggInfo;
 
-    int processFd;
-    struct addrinfo* processInfo;
-    struct sockaddr processAddr;
-    socklen_t processLen;
+    int procFd;
+    struct addrinfo* procInfo;
+    struct sockaddr procAddr;
+    socklen_t procLen;
 
     char* message;
+    char* temp;
+    char** buffer;
 
     fd_set fds;
     struct timeval tv;
     int sVal;
+
+    int n;
 
     if (argc != 7) {
         printf("usage: ./process <ID> <data> <D> <process port> <logger address> <logger port>\n");
@@ -127,8 +131,10 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
+    /* Allocate necessary memory */
     message = calloc(MSG_SIZE, sizeof(char));
-    if (message == NULL) {
+    buffer = calloc(BUF_SIZE, sizeof(char*));
+    if (message == NULL || buffer == NULL) {
         printf("process: failed to allocate necessary memory\n");
         exit(1);
     }
@@ -151,12 +157,12 @@ int main(int argc, char* argv[]) {
             move_randomly(&p.loc, D);
 
             /* Connect with logger */
-            loggerFd = tcp_socket(&loggerInfo, lName, lPort);
-            if (loggerFd < 0) {
+            loggFd = tcp_socket(&loggInfo, lName, lPort);
+            if (loggFd < 0) {
                 printf("process: failed to create tcp socket for given logger\n");
                 exit(1);
             }
-            if (connect(loggerFd, loggerInfo->ai_addr, loggerInfo->ai_addrlen) == -1) {
+            if (connect(loggFd, loggInfo->ai_addr, loggInfo->ai_addrlen) == -1) {
                 printf("process: failed to connect tcp socket for given logger\n");
                 exit(1);
             }
@@ -168,48 +174,64 @@ int main(int argc, char* argv[]) {
             sprintf(&message[15], "%s", p.port);
             sprintf(&message[22], "%d", p.loc.x);
             sprintf(&message[27], "%d", p.loc.y);
-            send(loggerFd, message, MSG_SIZE, 0);
+            send(loggFd, message, MSG_SIZE, 0);
 
             /* Respond to connection */
             FD_ZERO(&fds);
             FD_SET(sockFd, &fds);
-            FD_SET(loggerFd, &fds);
+            FD_SET(loggFd, &fds);
             tv.tv_sec = TIME_MIN;
             tv.tv_usec = 0;
-            sVal = select(loggerFd + 1, &fds, NULL, NULL, &tv);
+            sVal = select(loggFd + 1, &fds, NULL, NULL, &tv);
 
             while (sVal == 0) {
                 FD_ZERO(&fds);
                 FD_SET(sockFd, &fds);
-                FD_SET(loggerFd, &fds);
+                FD_SET(loggFd, &fds);
                 tv.tv_sec = TIME_MIN;
                 tv.tv_usec = 0;
-                sVal = select(loggerFd + 1, &fds, NULL, NULL, &tv);
+                sVal = select(loggFd + 1, &fds, NULL, NULL, &tv);
             }
 
             if (FD_ISSET(sockFd, &fds)) {
                 /* Handle new connection */
-                processLen = sizeof(processAddr);
-                processFd = accept(sockFd, &processAddr, &processLen);
-                if (processFd < 0) {
+                procLen = sizeof(procAddr);
+                procFd = accept(sockFd, &procAddr, &procLen);
+                if (procFd < 0) {
                     printf("logger: failed to accept incoming connection on socket\n");
                     exit(1);
                 }
 
                 memset(message, 0, MSG_SIZE);
-                recv(processFd, message, MSG_SIZE, 0);
-                printf("process: received data packet ID %d\n", (int) message[0]);
-                printf("process: received data packet content %s\n", &message[1]);
+                recv(procFd, message, MSG_SIZE, 0);
+                
+                for (n = 0; n < BUF_SIZE; n += 1) {
+                    temp = buffer[n];
+                    if (temp == NULL) {
+                        temp = calloc(MSG_SIZE, sizeof(char));
+                        if (temp == NULL) {
+                            printf("process: failed to allocate necessary memory\n");
+                            exit(1);
+                        }
+
+                        sprintf(temp, "%s", message);
+                        buffer[n] = temp;
+                        break;
+                    }
+                    if (temp[0] == message[0]) {
+                        break;
+                    }
+                }
 
                 memset(message, 0, MSG_SIZE);
                 message[0] = (char) p.id;
                 sprintf(&message[1], "%s", p.data);
-                send(processFd, message, MSG_SIZE, 0);
+                send(procFd, message, MSG_SIZE, 0);
             }
-            if (FD_ISSET(loggerFd, &fds)) {
+            if (FD_ISSET(loggFd, &fds)) {
                 /* Determine within range */
                 memset(message, 0, MSG_SIZE);
-                recv(loggerFd, message, MSG_SIZE, 0);
+                recv(loggFd, message, MSG_SIZE, 0);
                 if (strcmp(message, "in range") == 0) {
                     /* Transmit all packets */
                     printf("process: in range\n");
@@ -217,18 +239,18 @@ int main(int argc, char* argv[]) {
                     /* Exchange data packets */
                     memset(message, 0, MSG_SIZE);
                     sprintf(message, "next");
-                    send(loggerFd, message, MSG_SIZE, 0);
+                    send(loggFd, message, MSG_SIZE, 0);
 
                     memset(message, 0, MSG_SIZE);
-                    recv(loggerFd, message, MSG_SIZE, 0);
+                    recv(loggFd, message, MSG_SIZE, 0);
                     while (strcmp(message, "end") != 0) {
                         printf("%s, %s\n", &message[0], &message[14]);
-                        processFd = tcp_socket(&processInfo, &message[0], &message[14]);
+                        procFd = tcp_socket(&procInfo, &message[0], &message[14]);
                         if (sockFd < 0) {
                             printf("process: failed to create tcp socket for given process\n");
                             exit(1);
                         }
-                        if (connect(processFd, processInfo->ai_addr, processInfo->ai_addrlen) == -1) {
+                        if (connect(procFd, procInfo->ai_addr, procInfo->ai_addrlen) == -1) {
                             printf("process: failed to connect tcp socket for given process\n");
                             exit(1);
                         }
@@ -236,24 +258,40 @@ int main(int argc, char* argv[]) {
                         memset(message, 0, MSG_SIZE);
                         message[0] = (char) p.id;
                         sprintf(&message[1], "%s", p.data);
-                        send(processFd, message, MSG_SIZE, 0);
+                        send(procFd, message, MSG_SIZE, 0);
 
                         memset(message, 0, MSG_SIZE);
-                        recv(processFd, message, MSG_SIZE, 0);
-                        printf("process: received data packet ID %d\n", (int) message[0]);
-                        printf("process: received data packet content %s\n", &message[1]);
+                        recv(procFd, message, MSG_SIZE, 0);
+                        close(procFd);
+
+                        for (n = 0; n < BUF_SIZE; n += 1) {
+                            temp = buffer[n];
+                            if (temp == NULL) {
+                                temp = calloc(MSG_SIZE, sizeof(char));
+                                if (temp == NULL) {
+                                    printf("process: failed to allocate necessary memory\n");
+                                    exit(1);
+                                }
+
+                                sprintf(temp, "%s", message);
+                                buffer[n] = temp;
+                            }
+                            if (temp[0] == message[0]) {
+                                break;
+                            }
+                        }
 
                         sprintf(message, "next");
-                        send(loggerFd, message, MSG_SIZE, 0);
+                        send(loggFd, message, MSG_SIZE, 0);
 
                         memset(message, 0, MSG_SIZE);
-                        recv(loggerFd, message, MSG_SIZE, 0);
+                        recv(loggFd, message, MSG_SIZE, 0);
                     }
                 }
             }
 
             /* Disconnect from logger */
-            close(loggerFd);
+            close(loggFd);
         }
     }
 }
