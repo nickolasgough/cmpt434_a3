@@ -103,14 +103,14 @@ int main(int argc, char* argv[]) {
         printf("process: failed to allocate necessary memory\n");
         exit(1);
     }
-    if (gethostname(p.address, MSG_SIZE) == -1) {
+    if (gethostname(hName, MSG_SIZE) == -1) {
         printf("process: failed to determine the name of the machine\n");
         exit(1);
     }
+    sprintf(p.address, "%s.usask.ca", hName);
 
     /* Establish port binding */
-    sockFd = tcp_socket(&sockInfo, p.address, p.port);
-    sprintf(p.address, "%s.usask.ca", hName);
+    sockFd = tcp_socket(&sockInfo, hName, p.port);
     if (sockFd < 0) {
         printf("process: failed to create tcp socket for given process\n");
         exit(1);
