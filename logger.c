@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
     int T;
     int N;
 
-    char* hName;
+    char* name;
     char* port;
 
     int sockFd;
@@ -63,17 +63,17 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    hName = calloc(MSG_SIZE, sizeof(char));
-    if (hName == NULL) {
+    name = calloc(MSG_SIZE, sizeof(char));
+    if (name == NULL) {
         printf("logger: failed to allocate necessary memory\n");
         exit(1);
     }
 
-    if (gethostname(hName, MSG_SIZE) == -1) {
+    if (gethostname(name, MSG_SIZE) == -1) {
         printf("logger: failed to determine the name of the machine\n");
         exit(1);
     }
-    sockFd = tcp_socket(&sockInfo, hName, port);
+    sockFd = tcp_socket(&sockInfo, name, port);
     if (sockFd < 0) {
         printf("logger: failed to create tcp socket for given host\n");
         exit(1);
@@ -128,10 +128,12 @@ int main(int argc, char* argv[]) {
         pId = (int) message[0];
         cProc = &procs[pId];
         cProc->id = pId;
-        sprintf(cProc->port, "%s", &message[1]);
-        cProc->loc.x = atoi(&message[7]);
-        cProc->loc.y = atoi(&message[12]);
+        sprintf(cProc->address, "%s", &message[1]);
+        sprintf(cProc->port, "%s", &message[15]);
+        cProc->loc.x = atoi(&message[22]);
+        cProc->loc.y = atoi(&message[27]);
         printf("logger: connected to process %d\n", cProc->id);
+        printf("process address: %s, process port: %s\n", cProc->address, cProc->port);
         printf("process located at coords (%d, %d)\n", cProc->loc.x, cProc->loc.y);
 
         /* Determine within range */

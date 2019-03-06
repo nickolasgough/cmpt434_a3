@@ -29,6 +29,7 @@ typedef struct {
 
 typedef struct {
     int id;
+    char* address;
     char* port;
     coords loc;
     char* data;

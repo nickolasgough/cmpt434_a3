@@ -41,7 +41,6 @@ void move_randomly(coords* pos, int dist) {
 int main(int argc, char* argv[]) {
     proc p;
     int D;
-    char* pName;
 
     char* lName;
     char* lPort;
@@ -98,16 +97,16 @@ int main(int argc, char* argv[]) {
     }
 
     /* Establish port binding */
-    pName = calloc(MSG_SIZE, sizeof(char));
-    if (pName == NULL) {
+    p.address = calloc(MSG_SIZE, sizeof(char));
+    if (p.address == NULL) {
         printf("process: failed to allocate necessary memory\n");
         exit(1);
     }
-    if (gethostname(pName, MSG_SIZE) == -1) {
+    if (gethostname(p.address, MSG_SIZE) == -1) {
         printf("process: failed to determine the name of the machine\n");
         exit(1);
     }
-    sockFd = tcp_socket(&sockInfo, pName, p.port);
+    sockFd = tcp_socket(&sockInfo, p.address, p.port);
     if (sockFd < 0) {
         printf("process: failed to create tcp socket for given process\n");
         exit(1);
@@ -161,9 +160,10 @@ int main(int argc, char* argv[]) {
             /* Send relevant data */
             memset(message, 0, MSG_SIZE);
             message[0] = (char) p.id;
-            sprintf(&message[1], "%s", p.port);
-            sprintf(&message[7], "%d", p.loc.x);
-            sprintf(&message[12], "%d", p.loc.y);
+            sprintf(&message[1], "%s", p.address);
+            sprintf(&message[15], "%s", p.port);
+            sprintf(&message[22], "%d", p.loc.x);
+            sprintf(&message[27], "%d", p.loc.y);
             send(loggerFd, message, MSG_SIZE, 0);
 
             /* Determine within range */
