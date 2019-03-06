@@ -50,7 +50,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    /* Arguments and binding */
+    /* Arguments and validation */
     port = argv[1];
     if (!check_port(port)) {
         printf("logger: port number must be between 30000 and 40000\n");
@@ -63,22 +63,23 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
+    /* Find the hostname */
     name = calloc(MSG_SIZE, sizeof(char));
     if (name == NULL) {
         printf("logger: failed to allocate necessary memory\n");
         exit(1);
     }
-
     if (gethostname(name, MSG_SIZE) == -1) {
         printf("logger: failed to determine the name of the machine\n");
         exit(1);
     }
+
+    /* Establish port binding */
     sockFd = tcp_socket(&sockInfo, name, port);
     if (sockFd < 0) {
         printf("logger: failed to create tcp socket for given host\n");
         exit(1);
     }
-
     if (bind(sockFd, sockInfo->ai_addr, sockInfo->ai_addrlen) == -1) {
         printf("logger: failed to bind tcp socket for given host\n");
         exit(1);

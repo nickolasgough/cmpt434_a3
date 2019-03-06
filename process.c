@@ -42,6 +42,7 @@ int main(int argc, char* argv[]) {
     proc p;
     int D;
 
+    char hName[MSG_SIZE];
     char* lName;
     char* lPort;
 
@@ -64,7 +65,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    /* Arguments and binding */
+    /* Arguments and validation */
     p.id = atoi(argv[1]);
     if (p.id < ID_MIN || p.id > ID_MAX) {
         printf("process: id must be between %d and %d\n", ID_MIN, ID_MAX);
@@ -96,7 +97,7 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    /* Establish port binding */
+    /* Find the hostname */
     p.address = calloc(MSG_SIZE, sizeof(char));
     if (p.address == NULL) {
         printf("process: failed to allocate necessary memory\n");
@@ -106,6 +107,9 @@ int main(int argc, char* argv[]) {
         printf("process: failed to determine the name of the machine\n");
         exit(1);
     }
+    sprintf(p.adress, "%s.usask.ca", hName);
+
+    /* Establish port binding */
     sockFd = tcp_socket(&sockInfo, p.address, p.port);
     if (sockFd < 0) {
         printf("process: failed to create tcp socket for given process\n");
