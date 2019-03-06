@@ -58,13 +58,17 @@ int main(int argc, char* argv[]) {
 
     char* message;
     char* temp;
+
     char** buffer;
+    int bCount;
 
     fd_set fds;
     struct timeval tv;
     int sVal;
 
     int n;
+    int firstIter;
+    int numP;
 
     if (argc != 7) {
         printf("usage: ./process <ID> <data> <D> <process port> <logger address> <logger port>\n");
@@ -139,10 +143,21 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    /* Randomly position process */
-    pos_randomly(&p.loc);
+    /* Generate the data packet */
+    message[0] = p.id;
+    sprintf(&message[1], "%s", p.data);
+    buffer[0] = message;
+    bCount = 1;
+
+    /* Allocate necessary memory */
+    message = calloc(MSG_SIZE, sizeof(char));
+    if (message == NULL) {
+        printf("process: failed to allocate necessary memory\n");
+        exit(1);
+    }
 
     /* Begin simulated movement */
+    firstIter = 1;
     while (1) {
         FD_ZERO(&fds);
         tv.tv_sec = TIME_MIN;
@@ -154,7 +169,12 @@ int main(int argc, char* argv[]) {
         } else {
             /* Handle timeout reaction */
             /* Move process randomly */
-            move_randomly(&p.loc, D);
+            if (firstIter) {
+                firstIter = 0;
+                pos_randomly(&p.loc);
+            } else {
+                move_randomly(&p.loc, D);
+            }
 
             /* Connect with logger */
             loggFd = tcp_socket(&loggInfo, lName, lPort);
@@ -205,28 +225,47 @@ int main(int argc, char* argv[]) {
                 memset(message, 0, MSG_SIZE);
                 recv(procFd, message, MSG_SIZE, 0);
                 
-                for (n = 0; n < BUF_SIZE; n += 1) {
-                    temp = buffer[n];
-                    if (temp == NULL) {
-                        temp = calloc(MSG_SIZE, sizeof(char));
-                        if (temp == NULL) {
-                            printf("process: failed to allocate necessary memory\n");
-                            exit(1);
-                        }
+                numP = atoi(message);
+                for (n = 0; n > numP; n += 1) {
+                    memset(message, 0, MSG_SIZE);
+                    recv(procFd, message, MSG_SIZE, 0);
 
-                        sprintf(temp, "%s", message);
-                        buffer[n] = temp;
-                        break;
+                    for (n = 0; n < BUF_SIZE; n += 1) {
+                        temp = buffer[n];
+                        if (temp == NULL) {
+                            temp = calloc(MSG_SIZE, sizeof(char));
+                            if (temp == NULL) {
+                                printf("process: failed to allocate necessary memory\n");
+                                exit(1);
+                            }
+
+                            temp[0] = message[0];
+                            sprintf(&temp[1], "%s", &message[1]);
+                            buffer[n] = temp;
+                            break;
+                        }
+                        if (temp[0] == message[0]) {
+                            break;
+                        }
                     }
-                    if (temp[0] == message[0]) {
-                        break;
-                    }
+
+                    memset(message, 0, MSG_SIZE);
+                    sprintf(message, "next");
+                    send(procFd, message, MSG_SIZE, 0);
                 }
 
                 memset(message, 0, MSG_SIZE);
-                message[0] = (char) p.id;
-                sprintf(&message[1], "%s", p.data);
+                sprintf(message, "%d", bCount);
                 send(procFd, message, MSG_SIZE, 0);
+
+                for (n = 0; n < bCount; n += 1) {
+                    send(procFd, buffer[n], MSG_SIZE, 0);
+
+                    memset(message, 0, MSG_SIZE);
+                    recv(procFd, message, MSG_SIZE, 0);
+                }
+
+                close(procFd);
             }
             if (FD_ISSET(loggFd, &fds)) {
                 /* Determine within range */
@@ -244,7 +283,6 @@ int main(int argc, char* argv[]) {
                     memset(message, 0, MSG_SIZE);
                     recv(loggFd, message, MSG_SIZE, 0);
                     while (strcmp(message, "end") != 0) {
-                        printf("%s, %s\n", &message[0], &message[14]);
                         procFd = tcp_socket(&procInfo, &message[0], &message[14]);
                         if (sockFd < 0) {
                             printf("process: failed to create tcp socket for given process\n");
@@ -256,31 +294,50 @@ int main(int argc, char* argv[]) {
                         }
 
                         memset(message, 0, MSG_SIZE);
-                        message[0] = (char) p.id;
-                        sprintf(&message[1], "%s", p.data);
+                        sprintf(message, "%d", bCount);
                         send(procFd, message, MSG_SIZE, 0);
+
+                        for (n = 0; n < bCount; n += 1) {
+                            send(procFd, buffer[n], MSG_SIZE, 0);
+
+                            memset(message, 0, MSG_SIZE);
+                            recv(procFd, message, MSG_SIZE, 0);
+                        }
 
                         memset(message, 0, MSG_SIZE);
                         recv(procFd, message, MSG_SIZE, 0);
-                        close(procFd);
 
-                        for (n = 0; n < BUF_SIZE; n += 1) {
-                            temp = buffer[n];
-                            if (temp == NULL) {
-                                temp = calloc(MSG_SIZE, sizeof(char));
+                        numP = atoi(message);
+                        for (n = 0; n < numP; n += 1) {
+                            memset(message, 0, MSG_SIZE);
+                            recv(procFd, message, MSG_SIZE, 0);
+
+                            for (n = 0; n < BUF_SIZE; n += 1) {
+                                temp = buffer[n];
                                 if (temp == NULL) {
-                                    printf("process: failed to allocate necessary memory\n");
-                                    exit(1);
-                                }
+                                    temp = calloc(MSG_SIZE, sizeof(char));
+                                    if (temp == NULL) {
+                                        printf("process: failed to allocate necessary memory\n");
+                                        exit(1);
+                                    }
 
-                                sprintf(temp, "%s", message);
-                                buffer[n] = temp;
+                                    sprintf(temp, "%s", message);
+                                    buffer[n] = temp;
+                                    bCount += 1;
+                                }
+                                if (temp[0] == message[0]) {
+                                    break;
+                                }
                             }
-                            if (temp[0] == message[0]) {
-                                break;
-                            }
+
+                            memset(message, 0, MSG_SIZE);
+                            sprintf(message, "next");
+                            send(procFd, message, MSG_SIZE, 0);
                         }
 
+                        close(procFd);
+
+                        memset(message, 0, MSG_SIZE);
                         sprintf(message, "next");
                         send(loggFd, message, MSG_SIZE, 0);
 
