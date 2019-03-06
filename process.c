@@ -107,7 +107,7 @@ int main(int argc, char* argv[]) {
         printf("process: failed to determine the name of the machine\n");
         exit(1);
     }
-    sprintf(p.adress, "%s.usask.ca", hName);
+    sprintf(p.address, "%s.usask.ca", hName);
 
     /* Establish port binding */
     sockFd = tcp_socket(&sockInfo, p.address, p.port);
