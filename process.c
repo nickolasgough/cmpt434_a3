@@ -189,6 +189,7 @@ int main(int argc, char* argv[]) {
 
             if (FD_ISSET(sockFd, &fds)) {
                 /* Handle new connection */
+                printf("making connection\n");
                 processLen = sizeof(processAddr);
                 processFd = accept(sockFd, &processAddr, &processLen);
                 if (processFd < 0) {
