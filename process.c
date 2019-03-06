@@ -338,7 +338,7 @@ int main(int argc, char* argv[]) {
                         close(procFd);
 
                         for (n = 0; n < bCount; n += 1) {
-                            printf("%d - %s\n", buffer[n][0], buffer[n][1]);
+                            printf("%d - %s\n", buffer[n][0], &buffer[n][1]);
                         }
 
                         memset(message, 0, MSG_SIZE);
