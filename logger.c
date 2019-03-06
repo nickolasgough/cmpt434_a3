@@ -194,13 +194,14 @@ int main(int argc, char* argv[]) {
                     }
                     if ((int) message[0] == cProc->id) {
                         if (cProc->data == NULL) {
-                            cProc->data = calloc(MSG_SIZE, sizeof(char));
-                            if (cProc->data == NULL) {
+                            temp = calloc(MSG_SIZE, sizeof(char));
+                            if (temp == NULL) {
                                 printf("logger: failed to allocate necessary memory\n");
                                 exit(1);
                             }
 
-                            sprintf(cProc->data, "%s", &message[1]);
+                            sprintf(temp, "%s", &message[1]);
+                            cProc->data = temp;
                             pCount += 1;
                             break;
                         }
