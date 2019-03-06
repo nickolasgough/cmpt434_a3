@@ -189,7 +189,6 @@ int main(int argc, char* argv[]) {
 
             if (FD_ISSET(sockFd, &fds)) {
                 /* Handle new connection */
-                printf("making connection\n");
                 processLen = sizeof(processAddr);
                 processFd = accept(sockFd, &processAddr, &processLen);
                 if (processFd < 0) {
@@ -223,6 +222,7 @@ int main(int argc, char* argv[]) {
                     memset(message, 0, MSG_SIZE);
                     recv(loggerFd, message, MSG_SIZE, 0);
                     while (strcmp(message, "end") != 0) {
+                        printf("%s, %s\n", &message[0], &message[14]);
                         processFd = tcp_socket(&processInfo, &message[0], &message[14]);
                         if (sockFd < 0) {
                             printf("process: failed to create tcp socket for given process\n");
