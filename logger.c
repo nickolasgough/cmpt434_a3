@@ -40,7 +40,10 @@ int main(int argc, char* argv[]) {
     int rLen;
 
     proc* procs;
-    coords pLoc;
+    int pId;
+    proc* cProc;
+
+    int n;
 
     if (argc != 4) {
         printf("usage: ./logger <port> <T> <N>\n");
@@ -97,7 +100,15 @@ int main(int argc, char* argv[]) {
     if (procs == NULL) {
         printf("logger: failed to allocate necessary processes\n");
         exit(1);
-    }    
+    }
+    for (n = 0; n < N; n += 1) {
+        cProc = &procs[n];
+        cProc->port = calloc(MSG_SIZE, sizeof(char));
+        if (cProc->port == NULL) {
+            printf("logger: failed to allocate necessary memory\n");
+            exit(1);
+        }
+    }
 
     /* Handle incoming messages */
     while (1) {
@@ -114,20 +125,23 @@ int main(int argc, char* argv[]) {
         rLen = recv(clientFd, message, MSG_SIZE, 0);
 
         /* Handle initial message */
-        printf("logger got id %d\n", message[0]);
-        printf("logger got port %s\n", &message[1]);
+        pId = (int) message[0];
+        cProc = &procs[pId];
+        cProc->id = pId;
+        sprintf(cProc->port, "%s", &message[1]);
+        cProc->loc.x = atoi(&message[7]);
+        cProc->loc.y = atoi(&message[12]);
+        printf("logger: connected to %d\n", cProc->id);
+        printf("process located at coords (%d,%d)\n", cProc->loc.x, cProc->loc.y);
 
         /* Determine within range */
-        pLoc.x = atoi(&message[7]);
-        pLoc.y = atoi(&message[12]);
-        printf("logger got x %d\n", pLoc.x);
-        printf("logger got y %d\n", pLoc.y);
         memset(message, 0, MSG_SIZE);
-        if (in_range(&pLoc, T)) {
+        if (in_range(&cProc->loc, T)) {
             sprintf(message, "%s", "in range");
         } else {
             sprintf(message, "%s", "out of range");
         }
+        printf("process is %s\n", message);
         send(clientFd, message, MSG_SIZE, 0);
 
         while (rLen > 0) {

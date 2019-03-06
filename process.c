@@ -39,12 +39,9 @@ void move_randomly(coords* pos, int dist) {
 
 
 int main(int argc, char* argv[]) {
-    int id;
-    char* data;
+    proc p;
     int D;
-
     char* pName;
-    char* pPort;
 
     char* lName;
     char* lPort;
@@ -58,13 +55,10 @@ int main(int argc, char* argv[]) {
     struct addrinfo* loggerInfo;
 
     char* message;
-    int rLen;
 
     fd_set fds;
     struct timeval tv;
     int sVal;
-
-    coords loc;
 
     if (argc != 7) {
         printf("usage: ./process <ID> <data> <D> <process port> <logger address> <logger port>\n");
@@ -72,13 +66,13 @@ int main(int argc, char* argv[]) {
     }
 
     /* Arguments and binding */
-    id = atoi(argv[1]);
-    if (id < ID_MIN || id > ID_MAX) {
+    p.id = atoi(argv[1]);
+    if (p.id < ID_MIN || p.id > ID_MAX) {
         printf("process: id must be between %d and %d\n", ID_MIN, ID_MAX);
         exit(1);
     }
-    data = argv[2];
-    if (strlen(data) > 10) {
+    p.data = argv[2];
+    if (strlen(p.data) > 10) {
         printf("process: data cannot be greater than ten characters\n");
         exit(1);
     }
@@ -87,8 +81,8 @@ int main(int argc, char* argv[]) {
         printf("process: distance must be less than the bounds\n");
         exit(1);
     }
-    pPort = argv[4];
-    if (!check_port(pPort)) {
+    p.port = argv[4];
+    if (!check_port(p.port)) {
         printf("process: port number must be between 30000 and 40000\n");
         exit(1);
     }
@@ -113,7 +107,7 @@ int main(int argc, char* argv[]) {
         printf("process: failed to determine the name of the machine\n");
         exit(1);
     }
-    sockFd = tcp_socket(&sockInfo, pName, pPort);
+    sockFd = tcp_socket(&sockInfo, pName, p.port);
     if (sockFd < 0) {
         printf("process: failed to create tcp socket for given process\n");
         exit(1);
@@ -134,7 +128,7 @@ int main(int argc, char* argv[]) {
     }
 
     /* Randomly position process */
-    pos_randomly(&loc);
+    pos_randomly(&p.loc);
 
     /* Begin simulated movement */
     while (1) {
@@ -150,8 +144,8 @@ int main(int argc, char* argv[]) {
             /* Handle incoming connection */
         } else {
             /* Handle timeout reaction */
-            /* Move randomly */
-            move_randomly(&loc, D);
+            /* Move process randomly */
+            move_randomly(&p.loc, D);
 
             /* Connect with logger */
             loggerFd = tcp_socket(&loggerInfo, lName, lPort);
@@ -166,16 +160,15 @@ int main(int argc, char* argv[]) {
 
             /* Send relevant data */
             memset(message, 0, MSG_SIZE);
-            message[0] = (char) id;
-            sprintf(&message[1], "%s", pPort);
-            sprintf(&message[7], "%d", loc.x);
-            sprintf(&message[12], "%d", loc.y);
+            message[0] = (char) p.id;
+            sprintf(&message[1], "%s", p.port);
+            sprintf(&message[7], "%d", p.loc.x);
+            sprintf(&message[12], "%d", p.loc.y);
             send(loggerFd, message, MSG_SIZE, 0);
 
             /* Determine within range */
             memset(message, 0, MSG_SIZE);
             recv(loggerFd, message, MSG_SIZE, 0);
-            printf("received: %s\n", message);
             if (strcmp(message, "in range") == 0) {
                 printf("process: in range\n");
             } else {
