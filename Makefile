@@ -8,14 +8,14 @@ all: logger process
 
 
 logger: logger.o common.o
-	$(GCC) -o $@ $(FLAGS) $^
+	$(GCC) -o $@ $(FLAGS) -lm $^
 
 logger.o: logger.c
 	$(CC) -o $@ -c $(FLAGS) $<
 
 
 process: process.o common.o
-	$(GCC) -o $@ $(FLAGS) $^
+	$(GCC) -o $@ $(FLAGS) -lm $^
 
 process.o: process.c
 	$(CC) -o $@ -c $(FLAGS) $<

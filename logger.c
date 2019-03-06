@@ -10,14 +10,16 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <string.h>
+#include <math.h>
 
 #include "common.h"
 
 
 int in_range(coords* pos, int dist) {
-    int xSq  = (BASE_X - pos->x) * (BASE_X - pos->x);
-    int ySq = (BASE_Y - pos->y) * (BASE_Y - pos->y);
-    return (xSq + ySq) <= dist;
+    int xSq  = pow(BASE_X - pos->x, 2);
+    int ySq = pow(BASE_Y - pos->y, 2);
+    int res = sqrt(xSq + ySq);
+    return res <= dist;
 }
 
 
@@ -122,7 +124,7 @@ int main(int argc, char* argv[]) {
         printf("logger got y %d\n", pLoc.y);
         memset(message, 0, MSG_SIZE);
         if (in_range(&pLoc, T)) {
-            sprintf(message, "%s", "in range");                
+            sprintf(message, "%s", "in range");
         } else {
             sprintf(message, "%s", "out of range");
         }
