@@ -103,8 +103,9 @@ int main(int argc, char* argv[]) {
     }
     for (n = 0; n < N; n += 1) {
         cProc = &procs[n];
+        cProc->address = calloc(MSG_SIZE, sizeof(char));
         cProc->port = calloc(MSG_SIZE, sizeof(char));
-        if (cProc->port == NULL) {
+        if (cProc->address == NULL || cProc->port == NULL) {
             printf("logger: failed to allocate necessary memory\n");
             exit(1);
         }
