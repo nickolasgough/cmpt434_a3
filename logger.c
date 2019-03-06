@@ -55,7 +55,6 @@ int main(int argc, char* argv[]) {
     socklen_t procLen;
 
     char* message;
-    int rLen;
 
     proc** pProcs;
     int pId;
@@ -144,7 +143,7 @@ int main(int argc, char* argv[]) {
 
         /* Handle connection requests */
         memset(message, 0, MSG_SIZE);
-        rLen = recv(procFd, message, MSG_SIZE, 0);
+        recv(procFd, message, MSG_SIZE, 0);
 
         /* Handle initial message */
         pId = (int) message[0];
