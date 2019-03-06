@@ -179,6 +179,9 @@ int main(int argc, char* argv[]) {
         } else {
             for (n = 0; n < N; n += 1) {
                 nProc = pProcs[n];
+                if (nProc == NULL) {
+                    continue;
+                }
                 if (nProc->id == cProc->id) {
                     continue;
                 }
