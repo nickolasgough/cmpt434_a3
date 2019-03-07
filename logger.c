@@ -15,6 +15,7 @@
 #include "common.h"
 
 
+/* Check within range */
 int in_range(coords* src, coords* dest, int dist) {
     int xSq  = pow(dest->x - src->x, 2);
     int ySq = pow(dest->y - src->y, 2);
@@ -23,6 +24,7 @@ int in_range(coords* src, coords* dest, int dist) {
 }
 
 
+/* Allocate a process */
 proc* alloc_proc() {
     proc* pProc = calloc(1, sizeof(proc));
     if (pProc == NULL) {
@@ -41,6 +43,7 @@ proc* alloc_proc() {
 }
 
 
+/* Run the simulation */
 int main(int argc, char* argv[]) {
     int T;
     int N;
@@ -59,22 +62,22 @@ int main(int argc, char* argv[]) {
 
     proc** pProcs;
     int pCount;
-    int pId;
+    int pid;
     proc* cProc;
     proc* nProc;
 
     coords bLoc;
 
     int n, c;
-    int firstIter;
-    int numP;
+    int fIter;
+    int nPacks;
 
+    /* Arguments and validation */
     if (argc != 4) {
         printf("usage: ./logger <port> <T> <N>\n");
         exit(1);
     }
 
-    /* Arguments and validation */
     port = argv[1];
     if (!check_port(port)) {
         printf("logger: port number must be between 30000 and 40000\n");
@@ -135,19 +138,18 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    /* Handle incoming messages */
+    /* Collect process data */
     pCount = 0;
-    firstIter = 1;
+    fIter = 1;
     while (pCount < N) {
         /* Format the output */
-        if (firstIter) {
-            firstIter = 0;
+        if (fIter) {
+            fIter = 0;
         } else {
-            /* Format the output */
             printf("\n-----\n\n");
         }
 
-        /* Handle new connection */
+        /* Accept new connection */
         procLen = sizeof(procAddr);
         procFd = accept(sockFd, &procAddr, &procLen);
         if (procFd < 0) {
@@ -155,27 +157,29 @@ int main(int argc, char* argv[]) {
             exit(1);
         }
 
-        /* Handle incoming request */
+        /* Receive incoming request */
         memset(message, 0, MSG_SIZE);
         recv(procFd, message, MSG_SIZE, 0);
 
+        /* Respond with clear */
         memset(message, 0, MSG_SIZE);
         sprintf(message, "clear");
         send(procFd, message, MSG_SIZE, 0);
 
-        /* Handle connection requests */
+        /* Receive updated position */
         memset(message, 0, MSG_SIZE);
         recv(procFd, message, MSG_SIZE, 0);
 
-        /* Handle initial message */
-        pId = (int) message[0];
-        cProc = pProcs[pId];
+        /* Retrieve the process */
+        pid = (int) message[0];
+        cProc = pProcs[pid];
         if (cProc == NULL) {
             cProc = alloc_proc();
-            pProcs[pId] = cProc;
+            pProcs[pid] = cProc;
         }
 
-        cProc->id = pId;
+        /* Parse the updated information */
+        cProc->id = pid;
         sprintf(cProc->address, "%s", &message[1]);
         sprintf(cProc->port, "%s", &message[15]);
         cProc->loc.x = atoi(&message[22]);
@@ -194,15 +198,18 @@ int main(int argc, char* argv[]) {
         printf("process is %s of base station\n", message);
         send(procFd, message, MSG_SIZE, 0);
 
+        /* Receive next command */
         memset(message, 0, MSG_SIZE);
         recv(procFd, message, MSG_SIZE, 0);
         if (strcmp(message, "next") != 0) {
             /* Receive each packet */
-            numP = atoi(message);
-            for (n = 0; n < numP; n += 1) {
+            nPacks = atoi(message);
+            for (n = 0; n < nPacks; n += 1) {
+                /* Receive a data packet */
                 memset(message, 0, MSG_SIZE);
                 recv(procFd, message, MSG_SIZE, 0);
 
+                /* Print the reception */
                 printf("received process %d's data from process %d\n", (int) message[0], cProc->id);
 
                 /* Buffer given packet */
@@ -212,7 +219,9 @@ int main(int argc, char* argv[]) {
                     if (cProc == NULL) {
                         continue;
                     }
-                    if ((int) message[0] == cProc->id) {
+
+                    pid = (int) message[0];
+                    if (pid == cProc->id) {
                         if (cProc->data == NULL) {
                             temp = calloc(MSG_SIZE, sizeof(char));
                             if (temp == NULL) {
@@ -234,6 +243,7 @@ int main(int argc, char* argv[]) {
                 send(procFd, message, MSG_SIZE, 0);
             }
         } else {
+            /* Share process information */
             for (n = 0; n < N; n += 1) {
                 nProc = pProcs[n];
                 if (nProc == NULL) {
@@ -250,10 +260,11 @@ int main(int argc, char* argv[]) {
                     sprintf(&message[15], "%s", nProc->port);
                     send(procFd, message, MSG_SIZE, 0);
 
-                    /* Receive exchanged packets */
+                    /* Receive packet count */
                     memset(message, 0, MSG_SIZE);
                     recv(procFd, message, MSG_SIZE, 0);
 
+                    /* Receive exchanged packets */
                     c = atoi(message);
                     while (c > 0) {
                         memset(message, 0, MSG_SIZE);
@@ -268,10 +279,11 @@ int main(int argc, char* argv[]) {
                         send(procFd, message, MSG_SIZE, 0);
                     }
 
-                    /* Receive exchanged packets */
+                    /* Receive packet count */
                     memset(message, 0, MSG_SIZE);
                     recv(procFd, message, MSG_SIZE, 0);
 
+                    /* Receive exchanged packets */
                     c = atoi(message);
                     while (c > 0) {
                         memset(message, 0, MSG_SIZE);
@@ -286,11 +298,13 @@ int main(int argc, char* argv[]) {
                         send(procFd, message, MSG_SIZE, 0);
                     }
 
+                    /* Wait for response */
                     memset(message, 0, MSG_SIZE);
                     recv(procFd, message, MSG_SIZE, 0);
                 }
             }
 
+            /* Signal the end */
             memset(message, 0, MSG_SIZE);
             sprintf(message, "end");
             send(procFd, message, MSG_SIZE, 0);

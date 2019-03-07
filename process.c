@@ -14,12 +14,14 @@
 #include "common.h"
 
 
+/* Randomly position location */
 void pos_randomly(coords* pos) {
     pos->x = (rand() % BOUNDS_MAX) + 1;
     pos->y = (rand() % BOUNDS_MAX) + 1;
 }
 
 
+/* Randomly move location */
 void move_randomly(coords* pos, int dist) {
     int axis = rand() % DIR_MAX;
     int dir = rand() % DIR_MAX;
@@ -38,8 +40,9 @@ void move_randomly(coords* pos, int dist) {
 }
 
 
+/* Run the simulation */
 int main(int argc, char* argv[]) {
-    proc p;
+    proc this;
     int D;
 
     char* hName;
@@ -56,7 +59,8 @@ int main(int argc, char* argv[]) {
     struct sockaddr procAddr;
     socklen_t procLen;
 
-    int pId;
+    int pid;
+    int cleared;
 
     char* message;
     char* temp;
@@ -71,24 +75,22 @@ int main(int argc, char* argv[]) {
     int sVal;
 
     int n;
-    int firstIter;
-    int numP;
+    int fIter;
+    int nPacks;
 
-    int acked;
-
+    /* Arguments and validation */
     if (argc != 7) {
         printf("usage: ./process <ID> <data> <D> <process port> <logger address> <logger port>\n");
         exit(1);
     }
 
-    /* Arguments and validation */
-    p.id = atoi(argv[1]);
-    if (p.id < ID_MIN || p.id > ID_MAX) {
+    this.id = atoi(argv[1]);
+    if (this.id < ID_MIN || this.id > ID_MAX) {
         printf("process: id must be between %d and %d\n", ID_MIN, ID_MAX);
         exit(1);
     }
-    p.data = argv[2];
-    if (strlen(p.data) > 10) {
+    this.data = argv[2];
+    if (strlen(this.data) > 10) {
         printf("process: data cannot be greater than ten characters\n");
         exit(1);
     }
@@ -97,8 +99,8 @@ int main(int argc, char* argv[]) {
         printf("process: distance must be less than the bounds\n");
         exit(1);
     }
-    p.port = argv[4];
-    if (!check_port(p.port)) {
+    this.port = argv[4];
+    if (!check_port(this.port)) {
         printf("process: port number must be between 30000 and 40000\n");
         exit(1);
     }
@@ -114,9 +116,9 @@ int main(int argc, char* argv[]) {
     }
 
     /* Find the hostname */
-    p.address = calloc(MSG_SIZE, sizeof(char));
+    this.address = calloc(MSG_SIZE, sizeof(char));
     hName = calloc(MSG_SIZE, sizeof(char));
-    if (p.address == NULL || hName == NULL) {
+    if (this.address == NULL || hName == NULL) {
         printf("process: failed to allocate necessary memory\n");
         exit(1);
     }
@@ -124,10 +126,10 @@ int main(int argc, char* argv[]) {
         printf("process: failed to determine the name of the machine\n");
         exit(1);
     }
-    sprintf(p.address, "%s.usask.ca", hName);
+    sprintf(this.address, "%s.usask.ca", hName);
 
     /* Establish port binding */
-    sockFd = tcp_socket(&sockInfo, hName, p.port);
+    sockFd = tcp_socket(&sockInfo, hName, this.port);
     if (sockFd < 0) {
         printf("process: failed to create tcp socket for given process\n");
         exit(1);
@@ -150,8 +152,8 @@ int main(int argc, char* argv[]) {
     }
 
     /* Generate the data packet */
-    message[0] = (char) p.id;
-    sprintf(&message[1], "%s", p.data);
+    message[0] = (char) this.id;
+    sprintf(&message[1], "%s", this.data);
     buffer[0] = message;
     bCount = 1;
 
@@ -163,22 +165,24 @@ int main(int argc, char* argv[]) {
     }
 
     /* Begin simulated movement */
-    firstIter = 1;
+    fIter = 1;
     while (1) {
+        /* Periodically timeout */
         FD_ZERO(&fds);
         tv.tv_sec = TIME_MIN;
         tv.tv_usec = 0;
         sVal = select(sockFd + 1, &fds, NULL, NULL, &tv);
 
+        /* Handle timeout response */
         if (sVal != 0) {
             /* Ignore for timeout */
         } else {
             /* Position process randomly */
-            if (firstIter) {
-                firstIter = 0;
-                pos_randomly(&p.loc);
+            if (fIter) {
+                fIter = 0;
+                pos_randomly(&this.loc);
             } else {
-                move_randomly(&p.loc, D);
+                move_randomly(&this.loc, D);
             }
 
             /* Connect with logger */
@@ -197,8 +201,9 @@ int main(int argc, char* argv[]) {
             sprintf(message, "send");
             send(loggFd, message, MSG_SIZE, 0);
 
-            acked = 0;
-            while (!acked) {
+            /* Wait until cleared */
+            cleared = 0;
+            while (!cleared) {
                 /* Respond to connection */
                 FD_ZERO(&fds);
                 FD_SET(sockFd, &fds);
@@ -207,6 +212,7 @@ int main(int argc, char* argv[]) {
                 tv.tv_usec = 0;
                 sVal = select(loggFd + 1, &fds, NULL, NULL, &tv);
 
+                /* Wait for input */
                 while (sVal == 0) {
                     FD_ZERO(&fds);
                     FD_SET(sockFd, &fds);
@@ -216,6 +222,7 @@ int main(int argc, char* argv[]) {
                     sVal = select(loggFd + 1, &fds, NULL, NULL, &tv);
                 }
 
+                /* Handle process input */
                 if (FD_ISSET(sockFd, &fds)) {
                     /* Accept process connection */
                     procLen = sizeof(procAddr);
@@ -230,9 +237,9 @@ int main(int argc, char* argv[]) {
                     recv(procFd, message, MSG_SIZE, 0);
                     
                     /* Receive each packet */
-                    numP = atoi(message);
+                    nPacks = atoi(message);
                     oCount = bCount;
-                    for (n = 0; n < numP; n += 1) {
+                    for (n = 0; n < nPacks; n += 1) {
                         memset(message, 0, MSG_SIZE);
                         recv(procFd, message, MSG_SIZE, 0);
 
@@ -279,9 +286,11 @@ int main(int argc, char* argv[]) {
                     /* Terminate connection */
                     close(procFd);
                 }
+
+                /* Handle logger input */
                 if (FD_ISSET(loggFd, &fds)) {
-                    /* Logger acked connection */
-                    acked = 1;
+                    /* Logger cleared connection */
+                    cleared = 1;
 
                     /* Receive logger's ready */
                     memset(message, 0, MSG_SIZE);
@@ -289,18 +298,18 @@ int main(int argc, char* argv[]) {
 
                     /* Send relevant data */
                     memset(message, 0, MSG_SIZE);
-                    message[0] = (char) p.id;
-                    sprintf(&message[1], "%s", p.address);
-                    sprintf(&message[15], "%s", p.port);
-                    sprintf(&message[22], "%d", p.loc.x);
-                    sprintf(&message[27], "%d", p.loc.y);
+                    message[0] = (char) this.id;
+                    sprintf(&message[1], "%s", this.address);
+                    sprintf(&message[15], "%s", this.port);
+                    sprintf(&message[22], "%d", this.loc.x);
+                    sprintf(&message[27], "%d", this.loc.y);
                     send(loggFd, message, MSG_SIZE, 0);
 
                     /* Receive logger's diagnosis */
                     memset(message, 0, MSG_SIZE);
                     recv(loggFd, message, MSG_SIZE, 0);
 
-                    /* Logger or process */
+                    /* Determine within range */
                     if (strcmp(message, "in range") == 0) {
                         /* Send packet count */
                         memset(message, 0, MSG_SIZE);
@@ -329,7 +338,7 @@ int main(int argc, char* argv[]) {
                         recv(loggFd, message, MSG_SIZE, 0);
                         while (strcmp(message, "end") != 0) {
                             /* Connect to process */
-                            pId = (int) message[0];
+                            pid = (int) message[0];
                             procFd = tcp_socket(&procInfo, &message[1], &message[15]);
                             if (sockFd < 0) {
                                 printf("process: failed to create tcp socket for given process\n");
@@ -345,6 +354,7 @@ int main(int argc, char* argv[]) {
                             sprintf(message, "%d", bCount);
                             send(procFd, message, MSG_SIZE, 0);
 
+                            /* Count to logger */
                             send(loggFd, message, MSG_SIZE, 0);
 
                             /* Send each packet */
@@ -356,8 +366,8 @@ int main(int argc, char* argv[]) {
 
                                 /* Record each transmission */
                                 memset(message, 0, MSG_SIZE);
-                                message[0] = (char) p.id;
-                                message[1] = (char) pId;
+                                message[0] = (char) this.id;
+                                message[1] = (char) pid;
                                 message[2] = (char) buffer[n][0];
                                 send(loggFd, message, MSG_SIZE, 0);
 
@@ -368,12 +378,13 @@ int main(int argc, char* argv[]) {
                             /* Receive packet count */
                             memset(message, 0, MSG_SIZE);
                             recv(procFd, message, MSG_SIZE, 0);
-                            numP = atoi(message);
+                            nPacks = atoi(message);
 
+                            /* Count to logger */
                             send(loggFd, message, MSG_SIZE, 0);
 
                             /* Receive each packet */
-                            for (n = 0; n < numP; n += 1) {
+                            for (n = 0; n < nPacks; n += 1) {
                                 memset(message, 0, MSG_SIZE);
                                 recv(procFd, message, MSG_SIZE, 0);
 
@@ -407,11 +418,12 @@ int main(int argc, char* argv[]) {
 
                                 /* Record each reception */
                                 memset(message, 0, MSG_SIZE);
-                                message[0] = (char) pId;
-                                message[1] = (char) p.id;
+                                message[0] = (char) pid;
+                                message[1] = (char) this.id;
                                 message[2] = (char) oId;
                                 send(loggFd, message, MSG_SIZE, 0);
 
+                                /* Wait for acknowledgement */
                                 memset(message, 0, MSG_SIZE);
                                 recv(loggFd, message, MSG_SIZE, 0);
                             }
