@@ -56,6 +56,8 @@ int main(int argc, char* argv[]) {
     struct sockaddr procAddr;
     socklen_t procLen;
 
+    int pId;
+
     char* message;
     char* temp;
 
@@ -304,7 +306,8 @@ int main(int argc, char* argv[]) {
                     recv(loggFd, message, MSG_SIZE, 0);
                     while (strcmp(message, "end") != 0) {
                         /* Connect to process */
-                        procFd = tcp_socket(&procInfo, &message[0], &message[14]);
+                        pId = (int) message[0];
+                        procFd = tcp_socket(&procInfo, &message[1], &message[15]);
                         if (sockFd < 0) {
                             printf("process: failed to create tcp socket for given process\n");
                             exit(1);
@@ -319,9 +322,23 @@ int main(int argc, char* argv[]) {
                         sprintf(message, "%d", bCount);
                         send(procFd, message, MSG_SIZE, 0);
 
+                        memset(message, 0, MSG_SIZE);
+                        sprintf(message, "%d", bCount);
+                        send(loggFd, message, MSG_SIZE, 0);
+
                         /* Send each packet */
                         for (n = 0; n < bCount; n += 1) {
                             send(procFd, buffer[n], MSG_SIZE, 0);
+
+                            memset(message, 0, MSG_SIZE);
+                            recv(procFd, message, MSG_SIZE, 0);
+
+                            /* Record each transmission */
+                            memset(message, 0, MSG_SIZE);
+                            message[0] = (char) p.id;
+                            message[1] = (char) pId;
+                            message[2] = (char) buffer[n][0];
+                            send(loggFd, message, MSG_SIZE, 0);
 
                             memset(message, 0, MSG_SIZE);
                             recv(procFd, message, MSG_SIZE, 0);
@@ -330,6 +347,9 @@ int main(int argc, char* argv[]) {
                         /* Receive packet count */
                         memset(message, 0, MSG_SIZE);
                         recv(procFd, message, MSG_SIZE, 0);
+
+                        memset(message, 0, MSG_SIZE);
+                        send(loggFd, message, MSG_SIZE, 0);
 
                         /* Receive each packet */
                         numP = atoi(message);
@@ -361,6 +381,16 @@ int main(int argc, char* argv[]) {
                             memset(message, 0, MSG_SIZE);
                             sprintf(message, "next");
                             send(procFd, message, MSG_SIZE, 0);
+
+                            /* Record each reception */
+                            memset(message, 0, MSG_SIZE);
+                            message[0] = (char) pId;
+                            message[1] = (char) p.id;
+                            message[2] = (char) buffer[n][0];
+                            send(loggFd, message, MSG_SIZE, 0);
+
+                            memset(message, 0, MSG_SIZE);
+                            recv(procFd, message, MSG_SIZE, 0);
                         }
 
                         /* Terminate connection */

@@ -227,9 +227,44 @@ int main(int argc, char* argv[]) {
 
                 if (in_range(&cProc->loc, &nProc->loc, T)) {
                     memset(message, 0, MSG_SIZE);
-                    sprintf(&message[0], "%s", nProc->address);
-                    sprintf(&message[14], "%s", nProc->port);
+                    message[0] = (char) cProc->id;
+                    sprintf(&message[1], "%s", nProc->address);
+                    sprintf(&message[15], "%s", nProc->port);
                     send(procFd, message, MSG_SIZE, 0);
+
+                    /* Receive exchanged packets */
+                    memset(message, 0, MSG_SIZE);
+                    recv(procFd, message, MSG_SIZE, 0);
+
+                    c = atoi(message);
+                    while (c > 0) {
+                        memset(message, 0, MSG_SIZE);
+                        recv(procFd, message, MSG_SIZE, 0);
+
+                        printf("logger: packet originating from %d exchanged between %d and %d\n",
+                               (int) message[2], (int) message[0], (int) message[1]);
+
+                        memset(message, 0, MSG_SIZE);
+                        sprintf(message, "ack");
+                        send(procFd, message, MSG_SIZE, 0);
+                    }
+
+                    /* Receive exchanged packets */
+                    memset(message, 0, MSG_SIZE);
+                    recv(procFd, message, MSG_SIZE, 0);
+
+                    c = atoi(message);
+                    while (c > 0) {
+                        memset(message, 0, MSG_SIZE);
+                        recv(procFd, message, MSG_SIZE, 0);
+
+                        printf("logger: packet originating from %d exchanged between %d and %d\n",
+                               (int) message[2], (int) message[0], (int) message[1]);
+
+                        memset(message, 0, MSG_SIZE);
+                        sprintf(message, "ack");
+                        send(procFd, message, MSG_SIZE, 0);
+                    }
 
                     memset(message, 0, MSG_SIZE);
                     recv(procFd, message, MSG_SIZE, 0);
