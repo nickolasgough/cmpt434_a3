@@ -278,6 +278,8 @@ int main(int argc, char* argv[]) {
             sprintf(message, "end");
             send(procFd, message, MSG_SIZE, 0);
         }
+
+        printf("\n");
     }
 
     /* Print simulation stats */
