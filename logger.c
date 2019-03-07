@@ -195,7 +195,7 @@ int main(int argc, char* argv[]) {
                 memset(message, 0, MSG_SIZE);
                 recv(procFd, message, MSG_SIZE, 0);
 
-                printf("received process %d's data from process %d", (int) message[0], cProc->id);
+                printf("received process %d's data from process %d\n", (int) message[0], cProc->id);
 
                 /* Buffer given packet */
                 for (c = 0; c < N; c += 1) {

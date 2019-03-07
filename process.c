@@ -56,13 +56,15 @@ int main(int argc, char* argv[]) {
     struct sockaddr procAddr;
     socklen_t procLen;
 
-    int pId, oId;
+    int pId;
 
     char* message;
     char* temp;
 
     char** buffer;
     int bCount;
+
+    int oId, oCount;
 
     fd_set fds;
     struct timeval tv;
@@ -229,6 +231,7 @@ int main(int argc, char* argv[]) {
                 
                 /* Receive each packet */
                 numP = atoi(message);
+                oCount = bCount;
                 for (n = 0; n < numP; n += 1) {
                     memset(message, 0, MSG_SIZE);
                     recv(procFd, message, MSG_SIZE, 0);
@@ -266,7 +269,7 @@ int main(int argc, char* argv[]) {
                 send(procFd, message, MSG_SIZE, 0);
 
                 /* Send each packet */
-                for (n = 0; n < bCount; n += 1) {
+                for (n = 0; n < oCount; n += 1) {
                     send(procFd, buffer[n], MSG_SIZE, 0);
 
                     memset(message, 0, MSG_SIZE);
