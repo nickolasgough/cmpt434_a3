@@ -193,6 +193,7 @@ int main(int argc, char* argv[]) {
             /* Send ready message */
             memset(message, 0, MSG_SIZE);
             sprintf(message, "send");
+            send(loggFd, message, MSG_SIZE, 0);
 
             /* Respond to connection */
             FD_ZERO(&fds);
