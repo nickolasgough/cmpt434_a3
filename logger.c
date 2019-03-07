@@ -66,6 +66,7 @@ int main(int argc, char* argv[]) {
     coords bLoc;
 
     int n, c;
+    int firstIter;
     int numP;
 
     if (argc != 4) {
@@ -136,7 +137,15 @@ int main(int argc, char* argv[]) {
 
     /* Handle incoming messages */
     pCount = 0;
+    firstIter = 1;
     while (pCount < N) {
+        /* Format the output */
+        if (firstIter) {
+            firstIter = 0;
+        } else {
+            printf("\n");
+        }
+
         /* Handle new connection */
         procLen = sizeof(procAddr);
         procFd = accept(sockFd, &procAddr, &procLen);
@@ -277,9 +286,10 @@ int main(int argc, char* argv[]) {
             sprintf(message, "end");
             send(procFd, message, MSG_SIZE, 0);
         }
-
-        printf("\n");
     }
+
+    /* Format the output */
+    printf("\n");
 
     /* Print simulation stats */
     printf("logger: epidemic simulation complete\n");
