@@ -227,7 +227,7 @@ int main(int argc, char* argv[]) {
 
                 if (in_range(&cProc->loc, &nProc->loc, T)) {
                     memset(message, 0, MSG_SIZE);
-                    message[0] = (char) cProc->id;
+                    message[0] = (char) nProc->id;
                     sprintf(&message[1], "%s", nProc->address);
                     sprintf(&message[15], "%s", nProc->port);
                     send(procFd, message, MSG_SIZE, 0);

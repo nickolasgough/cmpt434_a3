@@ -56,7 +56,7 @@ int main(int argc, char* argv[]) {
     struct sockaddr procAddr;
     socklen_t procLen;
 
-    int pId;
+    int pId, oId;
 
     char* message;
     char* temp;
@@ -377,6 +377,9 @@ int main(int argc, char* argv[]) {
                                     break;
                                 }
                             }
+
+                            /* Store original id */
+                            oId = (int) message[0];
 
                             /* Request next packet */
                             memset(message, 0, MSG_SIZE);
