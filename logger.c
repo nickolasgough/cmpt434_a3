@@ -240,6 +240,7 @@ int main(int argc, char* argv[]) {
                     while (c > 0) {
                         memset(message, 0, MSG_SIZE);
                         recv(procFd, message, MSG_SIZE, 0);
+                        c -= 1;
 
                         printf("logger: packet originating from %d exchanged between %d and %d\n",
                                (int) message[2], (int) message[0], (int) message[1]);
@@ -257,6 +258,7 @@ int main(int argc, char* argv[]) {
                     while (c > 0) {
                         memset(message, 0, MSG_SIZE);
                         recv(procFd, message, MSG_SIZE, 0);
+                        c -= 1;
 
                         printf("logger: packet originating from %d exchanged between %d and %d\n",
                                (int) message[2], (int) message[0], (int) message[1]);
