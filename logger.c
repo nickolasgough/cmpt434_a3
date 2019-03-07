@@ -144,7 +144,7 @@ int main(int argc, char* argv[]) {
             firstIter = 0;
         } else {
             /* Format the output */
-            printf("\n-----\n");
+            printf("\n-----\n\n");
         }
 
         /* Handle new connection */
@@ -290,7 +290,7 @@ int main(int argc, char* argv[]) {
     }
 
     /* Format the output */
-    printf("\n-----\n");
+    printf("\n-----\n\n");
 
     /* Print simulation stats */
     printf("logger: epidemic simulation complete\n");
