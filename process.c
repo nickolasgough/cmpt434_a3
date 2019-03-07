@@ -291,7 +291,7 @@ int main(int argc, char* argv[]) {
                     /* Send each packet */
                     for (n = 0; n < bCount; n += 1) {
                         send(loggFd, buffer[n], MSG_SIZE, 0);
-                        free(buffer[N]);
+                        free(buffer[n]);
 
                         buffer[n] = NULL;
                         bCount -= 1;
