@@ -146,7 +146,7 @@ int main(int argc, char* argv[]) {
     }
 
     /* Generate the data packet */
-    message[0] = p.id;
+    message[0] = (char) p.id;
     sprintf(&message[1], "%s", p.data);
     buffer[0] = message;
     bCount = 1;
