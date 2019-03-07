@@ -390,7 +390,7 @@ int main(int argc, char* argv[]) {
                             memset(message, 0, MSG_SIZE);
                             message[0] = (char) pId;
                             message[1] = (char) p.id;
-                            message[2] = (char) buffer[n][0];
+                            message[2] = (char) oId;
                             send(loggFd, message, MSG_SIZE, 0);
 
                             memset(message, 0, MSG_SIZE);
