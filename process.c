@@ -268,7 +268,6 @@ int main(int argc, char* argv[]) {
                 /* Send each packet */
                 for (n = 0; n < bCount; n += 1) {
                     send(procFd, buffer[n], MSG_SIZE, 0);
-                    printf("id: %d\n", (int) buffer[n][0]);
 
                     memset(message, 0, MSG_SIZE);
                     recv(procFd, message, MSG_SIZE, 0);
@@ -381,7 +380,6 @@ int main(int argc, char* argv[]) {
 
                             /* Store original id */
                             oId = (int) message[0];
-                            printf("oId: %d\n", oId);
 
                             /* Request next packet */
                             memset(message, 0, MSG_SIZE);
