@@ -291,6 +291,10 @@ int main(int argc, char* argv[]) {
                     /* Send each packet */
                     for (n = 0; n < bCount; n += 1) {
                         send(loggFd, buffer[n], MSG_SIZE, 0);
+                        free(buffer[N]);
+
+                        buffer[n] = NULL;
+                        bCount -= 1;
 
                         memset(message, 0, MSG_SIZE);
                         recv(loggFd, message, MSG_SIZE, 0);
@@ -322,8 +326,6 @@ int main(int argc, char* argv[]) {
                         sprintf(message, "%d", bCount);
                         send(procFd, message, MSG_SIZE, 0);
 
-                        memset(message, 0, MSG_SIZE);
-                        sprintf(message, "%d", bCount);
                         send(loggFd, message, MSG_SIZE, 0);
 
                         /* Send each packet */
@@ -341,18 +343,17 @@ int main(int argc, char* argv[]) {
                             send(loggFd, message, MSG_SIZE, 0);
 
                             memset(message, 0, MSG_SIZE);
-                            recv(procFd, message, MSG_SIZE, 0);
+                            recv(loggFd, message, MSG_SIZE, 0);
                         }
 
                         /* Receive packet count */
                         memset(message, 0, MSG_SIZE);
                         recv(procFd, message, MSG_SIZE, 0);
+                        numP = atoi(message);
 
-                        memset(message, 0, MSG_SIZE);
                         send(loggFd, message, MSG_SIZE, 0);
 
                         /* Receive each packet */
-                        numP = atoi(message);
                         for (n = 0; n < numP; n += 1) {
                             memset(message, 0, MSG_SIZE);
                             recv(procFd, message, MSG_SIZE, 0);
@@ -390,7 +391,7 @@ int main(int argc, char* argv[]) {
                             send(loggFd, message, MSG_SIZE, 0);
 
                             memset(message, 0, MSG_SIZE);
-                            recv(procFd, message, MSG_SIZE, 0);
+                            recv(loggFd, message, MSG_SIZE, 0);
                         }
 
                         /* Terminate connection */
