@@ -380,6 +380,7 @@ int main(int argc, char* argv[]) {
 
                             /* Store original id */
                             oId = (int) message[0];
+                            printf("oId: %d\n", oId);
 
                             /* Request next packet */
                             memset(message, 0, MSG_SIZE);
