@@ -155,6 +155,14 @@ int main(int argc, char* argv[]) {
             exit(1);
         }
 
+        /* Handle incoming request */
+        memset(message, 0, MSG_SIZE);
+        recv(procFd, message, MSG_SIZE, 0);
+
+        memset(message, 0, MSG_SIZE);
+        sprintf(message, "clear");
+        send(procFd, message, MSG_SIZE, 0);
+
         /* Handle connection requests */
         memset(message, 0, MSG_SIZE);
         recv(procFd, message, MSG_SIZE, 0);

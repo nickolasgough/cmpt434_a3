@@ -190,14 +190,9 @@ int main(int argc, char* argv[]) {
                 exit(1);
             }
 
-            /* Send relevant data */
+            /* Send ready message */
             memset(message, 0, MSG_SIZE);
-            message[0] = (char) p.id;
-            sprintf(&message[1], "%s", p.address);
-            sprintf(&message[15], "%s", p.port);
-            sprintf(&message[22], "%d", p.loc.x);
-            sprintf(&message[27], "%d", p.loc.y);
-            send(loggFd, message, MSG_SIZE, 0);
+            sprintf(message, "send");
 
             /* Respond to connection */
             FD_ZERO(&fds);
@@ -225,7 +220,7 @@ int main(int argc, char* argv[]) {
                     exit(1);
                 }
 
-                /* Receive packer count */
+                /* Receive packet count */
                 memset(message, 0, MSG_SIZE);
                 recv(procFd, message, MSG_SIZE, 0);
                 
@@ -280,6 +275,19 @@ int main(int argc, char* argv[]) {
                 close(procFd);
             }
             if (FD_ISSET(loggFd, &fds)) {
+                /* Receive logger's ready */
+                memset(message, 0, MSG_SIZE);
+                recv(loggFd, message, MSG_SIZE, 0);
+
+                /* Send relevant data */
+                memset(message, 0, MSG_SIZE);
+                message[0] = (char) p.id;
+                sprintf(&message[1], "%s", p.address);
+                sprintf(&message[15], "%s", p.port);
+                sprintf(&message[22], "%d", p.loc.x);
+                sprintf(&message[27], "%d", p.loc.y);
+                send(loggFd, message, MSG_SIZE, 0);
+
                 /* Receive logger's diagnosis */
                 memset(message, 0, MSG_SIZE);
                 recv(loggFd, message, MSG_SIZE, 0);
