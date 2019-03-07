@@ -265,7 +265,7 @@ int main(int argc, char* argv[]) {
 
                 /* Send packet count */
                 memset(message, 0, MSG_SIZE);
-                sprintf(message, "%d", bCount);
+                sprintf(message, "%d", oCount);
                 send(procFd, message, MSG_SIZE, 0);
 
                 /* Send each packet */
