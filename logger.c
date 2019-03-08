@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
     int nPacks;
 
     int nTrans;
-    clock_t sTime, eTime;
+    time_t sTime, eTime;
     double elTime;
 
     /* Arguments and validation */
@@ -143,9 +143,9 @@ int main(int argc, char* argv[]) {
         exit(1);
     }
 
-    /* Begin simulation time */
+    /* Initialize simulation stats */
     nTrans = 0;
-    sTime = clock();
+    time(&sTime);
 
     /* Collect process data */
     pCount = 0;
@@ -322,9 +322,9 @@ int main(int argc, char* argv[]) {
         }
     }
 
-    /* End simulation time */
-    eTime = clock();
-    elTime = ((double) (eTime - sTime)) / CLOCKS_PER_SEC;
+    /* Finalize simulation stats */
+    time(&eTime);
+    elTime = difftime(eTime, sTime);
 
     /* Format the output */
     printf("\n-----\n\n");

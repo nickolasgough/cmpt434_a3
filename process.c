@@ -407,7 +407,8 @@ int main(int argc, char* argv[]) {
                                             exit(1);
                                         }
 
-                                        sprintf(temp, "%s", message);
+                                        temp[0] = message[0];
+                                        sprintf(&temp[1], "%s", &message[1]);
                                         buffer[n] = temp;
                                         bCount += 1;
                                         break;
