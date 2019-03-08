@@ -264,7 +264,6 @@ int main(int argc, char* argv[]) {
 
                                 temp[0] = message[0];
                                 sprintf(&temp[1], "%s", &message[1]);
-                                printf("%d, %s\n", (int) temp[0], &temp[1]);
                                 buffer[n] = temp;
                                 bCount += 1;
                                 break;
@@ -410,6 +409,7 @@ int main(int argc, char* argv[]) {
 
                                         temp[0] = message[0];
                                         sprintf(&temp[1], "%s", &message[1]);
+                                        printf("%d, %s\n", (int) temp[0], &temp[1]);
                                         buffer[n] = temp;
                                         bCount += 1;
                                         break;
