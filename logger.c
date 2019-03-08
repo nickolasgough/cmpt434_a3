@@ -11,6 +11,7 @@
 #include <netdb.h>
 #include <string.h>
 #include <math.h>
+#include <time.h>
 
 #include "common.h"
 
@@ -71,6 +72,10 @@ int main(int argc, char* argv[]) {
     int n, c;
     int fIter;
     int nPacks;
+
+    int nTrans;
+    clock_t sTime, eTime;
+    double elTime;
 
     /* Arguments and validation */
     if (argc != 4) {
@@ -137,6 +142,10 @@ int main(int argc, char* argv[]) {
         printf("logger: failed to allocate necessary processes\n");
         exit(1);
     }
+
+    /* Begin simulation time */
+    nTrans = 0;
+    sTime = clock();
 
     /* Collect process data */
     pCount = 0;
@@ -273,6 +282,7 @@ int main(int argc, char* argv[]) {
 
                         printf("logger: packet originating from %d exchanged between %d and %d\n",
                                (int) message[2], (int) message[0], (int) message[1]);
+                        nTrans += 1;
 
                         memset(message, 0, MSG_SIZE);
                         sprintf(message, "ack");
@@ -292,6 +302,7 @@ int main(int argc, char* argv[]) {
 
                         printf("logger: packet originating from %d exchanged between %d and %d\n",
                                (int) message[2], (int) message[0], (int) message[1]);
+                        nTrans += 1;
 
                         memset(message, 0, MSG_SIZE);
                         sprintf(message, "ack");
@@ -311,6 +322,10 @@ int main(int argc, char* argv[]) {
         }
     }
 
+    /* End simulation time */
+    eTime = clock();
+    elTime = (double) (eTime - sTime) / CLOCKS_PER_SEC;
+
     /* Format the output */
     printf("\n-----\n\n");
 
@@ -320,6 +335,7 @@ int main(int argc, char* argv[]) {
         cProc = pProcs[n];
         printf("process %d contained data %s\n", cProc->id, cProc->data);
     }
+    printf("processes transmitted data %d times over %fs\n", nTrans, elTime);
 
     return 0;
 }
