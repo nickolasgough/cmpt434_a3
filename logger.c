@@ -195,7 +195,7 @@ int main(int argc, char* argv[]) {
         cProc->loc.y = atoi(&message[27]);
         printf("logger: connected to process %d\n", cProc->id);
         printf("process address: %s, process port: %s\n", cProc->address, cProc->port);
-        printf("process located at coords (%d, %d)\n", cProc->loc.x, cProc->loc.y);
+        printf("process located at coordinates (%d, %d)\n", cProc->loc.x, cProc->loc.y);
 
         /* Determine within range */
         memset(message, 0, MSG_SIZE);
@@ -217,7 +217,6 @@ int main(int argc, char* argv[]) {
                 /* Receive a data packet */
                 memset(message, 0, MSG_SIZE);
                 recv(procFd, message, MSG_SIZE, 0);
-                printf("received %s\n", &message[1]);
 
                 /* Print the reception */
                 printf("received process %d's data from process %d\n", (int) message[0], cProc->id);
