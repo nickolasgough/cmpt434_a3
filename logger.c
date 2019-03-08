@@ -217,6 +217,7 @@ int main(int argc, char* argv[]) {
                 /* Receive a data packet */
                 memset(message, 0, MSG_SIZE);
                 recv(procFd, message, MSG_SIZE, 0);
+                printf("received %s\n", &message[1]);
 
                 /* Print the reception */
                 printf("received process %d's data from process %d\n", (int) message[0], cProc->id);
