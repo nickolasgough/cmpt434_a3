@@ -266,7 +266,6 @@ int main(int argc, char* argv[]) {
                                 sprintf(&temp[1], "%s", &message[1]);
                                 buffer[n] = temp;
                                 bCount += 1;
-                                printf("received %s\n", &buffer[n][1]);
                                 break;
                             }
                             if (temp[0] == message[0]) {
@@ -328,6 +327,7 @@ int main(int argc, char* argv[]) {
 
                         /* Send each packet */
                         for (n = 0; n < bCount; n += 1) {
+                            printf("sending %s\n", &buffer[n][1]);
                             send(loggFd, buffer[n], MSG_SIZE, 0);
                             free(buffer[n]);
 
@@ -412,7 +412,6 @@ int main(int argc, char* argv[]) {
                                         sprintf(&temp[1], "%s", &message[1]);
                                         buffer[n] = temp;
                                         bCount += 1;
-                                        printf("received %s\n", &buffer[n][1]);
                                         break;
                                     }
                                     if (temp[0] == message[0]) {
