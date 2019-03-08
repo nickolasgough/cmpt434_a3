@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
 
     int nTrans;
     time_t sTime, eTime;
-    double elTime;
+    int elTime;
 
     /* Arguments and validation */
     if (argc != 4) {
@@ -324,7 +324,7 @@ int main(int argc, char* argv[]) {
 
     /* Finalize simulation stats */
     time(&eTime);
-    elTime = difftime(eTime, sTime);
+    elTime = (int) difftime(eTime, sTime);
 
     /* Format the output */
     printf("\n-----\n\n");
@@ -335,7 +335,7 @@ int main(int argc, char* argv[]) {
         cProc = pProcs[n];
         printf("process %d contained data %s\n", cProc->id, cProc->data);
     }
-    printf("processes transmitted data %d times over %fs\n", nTrans, elTime);
+    printf("processes transmitted data %d times over %ds\n", nTrans, elTime);
 
     return 0;
 }
