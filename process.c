@@ -10,6 +10,7 @@
 #include <netinet/in.h>
 #include <netdb.h>
 #include <string.h>
+#include <math.h>
 
 #include "common.h"
 
@@ -23,19 +24,27 @@ void pos_randomly(coords* pos) {
 
 /* Randomly move location */
 void move_randomly(coords* pos, int dist) {
-    int axis = rand() % DIR_MAX;
-    int dir = rand() % DIR_MAX;
+    int degs = rand() % DEG_FULL;
+    double rads = degs * (M_PI / DEG_HALF);
 
-    int* a = axis == 0 ? &pos->x : &pos->y;
-    int d = dir == 0 ? 1 : -1;
+    int x = dist * cos(rads);
+    int y = dist * sin(rads);
 
-    *a += d * dist;
+    pos->x += x;
+    pos->y += y;
 
-    if (*a < BOUNDS_MIN) {
-        *a = abs(*a);
+    if (pos->x < BOUNDS_MIN) {
+        pos->x = abs(pos->x);
     }
-    if (*a > BOUNDS_MAX) {
-        *a = (2 * BOUNDS_MAX) - *a;
+    if (pos->y < BOUNDS_MIN) {
+        pos->y = abs(pos->y);
+    }
+
+    if (pos->x > BOUNDS_MAX) {
+        pos->x = (2 * BOUNDS_MAX) - pos->x;
+    }
+    if (pos->y > BOUNDS_MAX) {
+        pos->y = (2 * BOUNDS_MAX) - pos->y;
     }
 }
 

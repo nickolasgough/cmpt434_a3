@@ -15,7 +15,8 @@
 
 #define TIME_MIN 1
 
-#define DIR_MAX 2
+#define DEG_HALF 180
+#define DEG_FULL 360
 
 #define BOUNDS_MIN 0
 #define BOUNDS_MAX 1000
