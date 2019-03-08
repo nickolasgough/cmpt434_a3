@@ -1,0 +1,33 @@
+Nickolas Gough, nvg081, 11181823
+
+
+Overview:
+
+
+Logger:
+
+    Description:
+
+    Pseudocode:
+
+
+Process:
+
+    Description:
+
+    Pseudocode:
+
+
+Implementation:
+
+    Data generation:
+
+    Logger tracking:
+
+    Data exchange:
+
+    Exchange records:
+
+
+Discussion:
+
