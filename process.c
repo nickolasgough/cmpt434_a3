@@ -83,7 +83,7 @@ int main(int argc, char* argv[]) {
     struct timeval tv;
     int sVal;
 
-    int n;
+    int n, b;
     int fIter;
     int nPacks;
 
@@ -253,8 +253,8 @@ int main(int argc, char* argv[]) {
                         recv(procFd, message, MSG_SIZE, 0);
 
                         /* Buffer given packet */
-                        for (n = 0; n < BUF_SIZE; n += 1) {
-                            temp = buffer[n];
+                        for (b = 0; b < BUF_SIZE; b += 1) {
+                            temp = buffer[b];
                             if (temp == NULL) {
                                 temp = calloc(MSG_SIZE, sizeof(char));
                                 if (temp == NULL) {
@@ -264,7 +264,7 @@ int main(int argc, char* argv[]) {
 
                                 temp[0] = message[0];
                                 sprintf(&temp[1], "%s", &message[1]);
-                                buffer[n] = temp;
+                                buffer[b] = temp;
                                 bCount += 1;
                                 break;
                             }
@@ -397,8 +397,8 @@ int main(int argc, char* argv[]) {
                                 recv(procFd, message, MSG_SIZE, 0);
 
                                 /* Buffer given packet */
-                                for (n = 0; n < BUF_SIZE; n += 1) {
-                                    temp = buffer[n];
+                                for (b = 0; b < BUF_SIZE; b += 1) {
+                                    temp = buffer[b];
                                     if (temp == NULL) {
                                         temp = calloc(MSG_SIZE, sizeof(char));
                                         if (temp == NULL) {
@@ -408,7 +408,7 @@ int main(int argc, char* argv[]) {
 
                                         temp[0] = message[0];
                                         sprintf(&temp[1], "%s", &message[1]);
-                                        buffer[n] = temp;
+                                        buffer[b] = temp;
                                         bCount += 1;
                                         break;
                                     }
