@@ -324,7 +324,7 @@ int main(int argc, char* argv[]) {
 
     /* End simulation time */
     eTime = clock();
-    elTime = (double) (eTime - sTime) / CLOCKS_PER_SEC;
+    elTime = ((double) (eTime - sTime)) / CLOCKS_PER_SEC;
 
     /* Format the output */
     printf("\n-----\n\n");
