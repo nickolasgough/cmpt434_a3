@@ -327,16 +327,14 @@ int main(int argc, char* argv[]) {
 
                         /* Send each packet */
                         for (n = 0; n < bCount; n += 1) {
-                            printf("sending %s\n", &buffer[n][1]);
                             send(loggFd, buffer[n], MSG_SIZE, 0);
                             free(buffer[n]);
-
                             buffer[n] = NULL;
-                            bCount -= 1;
 
                             memset(message, 0, MSG_SIZE);
                             recv(loggFd, message, MSG_SIZE, 0);
                         }
+                        bCount = 0;
                     } else {
                         /* Request next process */
                         memset(message, 0, MSG_SIZE);
