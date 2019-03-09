@@ -3,30 +3,103 @@ Nickolas Gough, nvg081, 11181823
 
 Overview:
 
+The following design document describes a solution to a simulation problem
+mirroring wildlife tracking through applications employing epidemic protocols
+to efficiently transfer data to a central base station by exchanging data
+amongst autonomous sensors carried by individuals of the wildlife. Essentially,
+each individual animal will carry an autonomous sensor that exchanges data
+with other autonomous sensors carried by individual animals that come within
+range of each other. The data carried by a single autonomous sensor is then
+transferred to the base station when the individual animal carrying the sensor
+comes within range of the base station. This model allows the data carried by
+a sensor carried by an animal that never comes within range of the base station
+to be delivered by another sensor carried by an animal that was at one point in
+range of the other animal and is now within range of the base station. 
+
 
 Logger:
 
-    Description:
+Description:
 
-    Pseudocode:
+The responsibility of the logger is to connect with the processes, record their
+location, contact information, and determine if the process is within range of
+the base station. If the connected process is within range of the base station,
+it is the logger's responsibility to accept all the data packets being carried
+by the connected process. Otherwise, it is the logger's responsibility to share
+the contact information of other non-connected processes within range of the
+connected process to allow the connected process to exchange its carried data
+packets for the carried data packets of the in-range non-connected process. When
+two processes are exchanging data packets between themselves, it is the
+responsibility of the logger to receive records of the exchange of data packets
+between the processes. Upon each connection, the logger will print to the
+console the process identifier, the location of the process, whether the process
+is in range, the generating process and content of each received data packet,
+and the process identifiers of processes exchanging data and the process
+identifier of the process that generated the exchanged data packet. The
+simulation ends once the logger has received all generated data packets, at
+which point it is the responsibility of the logger to print the total number of
+exchanges between the roaming processes and the running time of the simulation
+in seconds. 
+
+Pseudocode:
+
+    - Collect and validate arguments
+    - Establish socket binding and connection queue
+    - Setup intial variables, including base station location
+    - while at least one data packet has not been received
+        - Accept a new process connection, initiating communication
+        - Receive and print connected process information
+        - If connected process is in range of the base station
+            - Receive each of the connected process' carried data packets
+        - Else
+            - For each other process for which information is known
+                - If the other process is in range of the connected process
+                    - Share the other process' contact information with the
+                      connected processs
+                    - Receive and print recording of each exchange of a data
+                      packet between the two processes
+    - Print the contents of each generated data packet
+    - Print the total number of exchanges between the roaming processes
+    - Print the running time of the whole simulation, in seconds
 
 
 Process:
 
-    Description:
+Description:
 
-    Pseudocode:
+The responsibility of the process is to generate a data packet and then every
+second for the duration of the simulation to randomly update its location
+within a predefined distance, establish a connection with the logger, and share
+its location and contact information with the logger. If the logger then
+determines the process is within range of the base station, it is the process'
+responsibility to transfer a copy of each of its carried data packets to the
+logger. Otherwise, it is the process' responsibility to receive the contact
+information of other processes in range from the logger and establish a
+connection with each other process in turn. While connected with each other
+process, it is the process' responsibility to exchange its carried data packets
+for the carried data packets of the other process and to record the exchange of
+each data packet with the logger, including process identifiers of the process
+sending the packet, the process receiving the packet, and the process from which
+the packet originates. While waiting to establish a connection with the logger,
+if another process establishes a connection with the process, it is the process'
+responsibility to exchange its carried data packets for the carried data packets
+of the other process. The process' buffer storing its carried data packets has
+a maximum capacity, limiting the process' number of carried data packets. This
+means the process will discard some exchanged data packets, but their exchange
+will still recorded.
+
+Pseudocode:
 
 
 Implementation:
 
-    Data generation:
+Data generation:
 
-    Logger tracking:
+Logger tracking:
 
-    Data exchange:
+Data exchange:
 
-    Exchange records:
+Exchange records:
 
 
 Discussion:
