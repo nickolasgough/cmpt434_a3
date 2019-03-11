@@ -1,0 +1,213 @@
+Nickolas Gough, nvg081, 11181823
+
+
+# The following test cases were run:
+
+## N = 2, T = 300, D = 100
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30004
+process located at coordinates (384, 887)
+process is out of range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30004
+process located at coordinates (429, 798)
+process is out of range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30004
+process located at coordinates (387, 888)
+process is out of range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30004
+process located at coordinates (348, 980)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30005
+process located at coordinates (384, 887)
+process is out of range of base station
+logger: packet originating from 0 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 1 and 0
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30004
+process located at coordinates (390, 890)
+process is out of range of base station
+logger: packet originating from 1 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 0 and 1
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30005
+process located at coordinates (429, 798)
+process is out of range of base station
+logger: packet originating from 0 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 1 and 0
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30004
+process located at coordinates (321, 819)
+process is out of range of base station
+logger: packet originating from 1 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 0 and 1
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30005
+process located at coordinates (387, 888)
+process is out of range of base station
+logger: packet originating from 0 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 1 and 0
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30004
+process located at coordinates (418, 839)
+process is out of range of base station
+logger: packet originating from 1 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 0 and 1
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30005
+process located at coordinates (348, 980)
+process is out of range of base station
+logger: packet originating from 0 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 1 and 0
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30004
+process located at coordinates (383, 746)
+process is in range of base station
+received process 1's data from process 1
+received process 0's data from process 1
+
+-----
+
+logger: epidemic simulation complete
+process 0 contained data msg 1
+process 1 contained data msg 1
+processes transmitted data 26 times over 35s
+
+
+## N = 2, T = 200, D = 200
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30001
+process located at coordinates (384, 887)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30001
+process located at coordinates (474, 709)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30001
+process located at coordinates (390, 890)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30001
+process located at coordinates (312, 926)
+process is out of range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30002
+process located at coordinates (384, 887)
+process is out of range of base station
+logger: packet originating from 1 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 0 and 1
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30001
+process located at coordinates (396, 745)
+process is out of range of base station
+logger: packet originating from 0 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 1 and 0
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30002
+process located at coordinates (474, 709)
+process is out of range of base station
+logger: packet originating from 1 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 1 and 0
+logger: packet originating from 0 exchanged between 0 and 1
+logger: packet originating from 1 exchanged between 0 and 1
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30001
+process located at coordinates (258, 602)
+process is out of range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30002
+process located at coordinates (390, 890)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30001
+process located at coordinates (453, 643)
+process is in range of base station
+received process 0's data from process 0
+received process 1's data from process 0
+
+-----
+
+logger: epidemic simulation complete
+process 0 contained data msg 1
+process 1 contained data msg 1
+processes transmitted data 10 times over 29s

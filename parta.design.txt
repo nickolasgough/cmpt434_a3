@@ -1,7 +1,7 @@
 Nickolas Gough, nvg081, 11181823
 
 
-Overview:
+# Overview:
 
 The following design document describes a solution to a simulation problem
 mirroring wildlife tracking through applications employing epidemic protocols
@@ -17,7 +17,7 @@ to be delivered by another sensor carried by an animal that was at one point in
 range of the other animal and is now within range of the base station. 
 
 
-Logger:
+# Logger:
 
 Description:
 
@@ -46,7 +46,7 @@ Pseudocode:
     - Collect and validate arguments
     - Establish socket binding and connection queue
     - Setup intial variables, including base station location
-    - while at least one data packet has not been received
+    - While at least one data packet has not been received
         - Accept a new process connection, initiating communication
         - Receive and print connected process information
         - If connected process is in range of the base station
@@ -63,7 +63,7 @@ Pseudocode:
     - Print the running time of the whole simulation, in seconds
 
 
-Process:
+# Process:
 
 Description:
 
@@ -90,17 +90,216 @@ will still recorded.
 
 Pseudocode:
 
+    - Collect and validate arguments
+    - Establish socket binding and connection queue
+    - Setup intial variables, including process location
+    - In in an infinite loop
+        - Block for one second using a timeout
+        - Update location by randomly moving
+        - Establish connection with the logger
+        - While waiting for logger to reply
+            - If contacted by another process
+                - Receive each of the connected process' carried data packets,
+                  buffering each data packet, if there is buffer space available
+                - Send each of the process' carried packets to the connected
+                  process
+            - If logger replies to connection
+                - Send the process' location and contact information to logger
+                - If within range of the base station
+                    - Send each carried data packet to logger
+                - Else
+                    - For each other in range process for which contact
+                      information is received from logger
+                        - Establish a connection with the other process
+                        - Send each carried data packet to the other process
+                        - Record each exchanged data packet with logger
+                        - Receive each of the other process' carried data packets,
+                          buffering each data packet, if there is buffer space available 
+                        - Record each exchanged data packet with logger
 
-Implementation:
 
-Data generation:
+# Implementation:
 
-Logger tracking:
+Relevant files:
 
-Data exchange:
+    - common.c -> defines common functions
+    - common.h -> defines common macros and structures
+    - logger.c -> defines the logger
+    - process.c -> defines the process
 
-Exchange records:
+## Process tracking:
+
+The logger is designed to track the contact information, location information,
+and the generated data packet of each process during the simulation. The logger
+defines an array for storing the relevant information of each process as a proc
+struct, which is defined in the common.h file. When a process connects with the
+logger and sends its process information, the corresponding proc structure,
+indexed by process identifier, is updated with the received process information.
+Likewise, when receiving a process' generated data packet for the first time
+from a process within range of the base station, the logger will update the
+corresponding proc struct to store the process' generated data packet.
+
+Tracking message format:
+    
+    - Byte(s) [0] -> Process identifier
+    - Bytes(s) [1-14] -> Process address
+    - Byte(s) [15-21] -> Process port
+    - Byte(s) [22-26] -> Process x-coordinate
+    - Byte(s) [27-31] -> Process y-coordinate
+
+Notes:
+
+The proc structure for each process is not allocated until the corresponding
+process connects with the logger for the first time. This means that a process
+that connects with the logger and is not in range of the base station cannot
+exchange data packets with other processes that have not yet connected with the
+logger, even if they are in range.
+
+## Data exchange:
+
+The logger is designed to share process contact information with the connected
+process when it is not within range of the base station. The process is designed
+to receive other process contact information from the logger when it is not
+within range of the base station. The logger will share the process contact
+information with the connected process of each other process within range in
+turn, waiting for a response from the connected process before sharing the
+process contact information of the next other process within range. When the
+process receives the process contact information of another process within
+range, the process will connect with the other process. The process will then
+share the count of carried data packets it will exchange with the other process
+and then share each carried data packet in turn, waiting for a response from
+the other process before sharing the next carried data packet. The process will
+then receive the count of carried data packets the other process will share with
+it and then receive each carried data packet in turn, responding to the other
+process before receiving the next carried data packet.
+
+Contact message format:
+    
+    - Byte(s) [0] -> Process identifier
+    - Bytes(s) [1-14] -> Process address
+    - Byte(s) [15-21] -> Process port
+
+Data exchange format:
+
+    - Byte(s) [0] -> Process identifier
+    - Byte(s) [1-999] -> Data content
+
+Notes:
+
+The process' data exchange protocol is described for only one side of the
+connection. The other side of the connection, the side that is alerted to a
+connection, behaves in an identical manner, but is reciprocal, due to the
+reciprocal nature of the connection. The process is identical, with the only
+real difference being the order of operations.
 
 
-Discussion:
+## Data Buffering:
 
+The process is designed to buffer carried data packets within a fixed size
+array. When the process starts up, the process will generate a data packet,
+which is an argument to the program, and store the generated data packet as the
+first entry in the buffer. When the process exchanges carried data packets with
+another process, the process will only buffer received data packets that can be
+accomodated. More precisely, if there is free space within the buffer when the
+process receives a data packet from another process, it will be buffered in the
+first available position in the buffer. If there is no free space within the
+buffer when the process receives a data packet from another process, the data
+packet is discarded.
+
+Buffered data format:
+
+    - Byte(s) [0] -> Process identifier
+    - Byte(s) [1-999] -> Data content
+
+## Exchange records:
+
+The process is designed to share records (or receipts) of data packet exchanges
+between processes with the logger. The logger is designed to receive records
+(or receipts) of data packet exchanges between the processes from the connected
+process. While the process is exchanging carried data packets with each other
+process in range, the process will send a record of each exchange to the logger
+in the form of a message containing the process identifier of the process
+sharing the data packet, the process identifier of the process receiving the
+data packet, and the process identifier of the process that originally generated
+the data packet. The process will wait for a response from the logger before
+proceeding. The logger will receive each record of a data packet exchange, print
+the data contained within the record to the console, and respond before
+proceeding.
+
+Record message format:
+
+    - Byte(s) [0] -> Sharing process identifier
+    - Byte(s) [1] -> Receiving process identifier
+    - Byte(s) [2] -> Original process identifier
+
+Notes:
+
+The protocol for the sharing of records (or receipts) of data packet exchanges
+is similar to the protocol for exchanging carried data packets between
+processes. The process will forward the count of carried data packets being
+being shared and being received before sharing and receiving the carried data
+packets, respectively. The process will then share a record of each data packet
+exchange as the carried data packets are shared and as the carried data packets
+are received respectively.
+
+
+# Discussion:
+
+## Basic protocols:
+
+The basics of each protocol is described here. The formats of the protocol
+messages have been described in detail above.
+
+## Establishing connection with the logger:
+
+Processes establish a connection with the logger by first sending a "send"
+message to the logger and then waiting for a "clear" message from the logger
+before beginning communiction with the logger. In the meantime, the process may
+accept connections from another process and then returning to its waiting state.
+
+## Interprocess communication
+
+Processes then communicate with the logger by first sending a formatted message
+to the logger and waiting for a response before sending the next formatted
+message. Processes communicate amongs themselves in the same way, sending a
+formatted message to the other process and waiting for a response before sending
+the first formatted message. In both the case of process-to-process and process-
+to-logger communication, exchanging data packets begins with the count of the
+carried data packets that will be exchanged.
+
+## Results
+
+The output of some test runs can be found in the partb.testing.txt file. The
+file demonstrates that decreasing the number of participating processes will
+decrease the elapsed time of the simulation, while increasing it will increase
+the elapsed time of the simulation. The file demonstrates tht decreasing the
+distance travelled by the processes will increase the elapsed time of the
+simulation, while increasing it will decrease the elapsed time of the
+simulation. The file demonstrates that decreasing the range of communication
+increases the elapsed time of the simulation, while increasing it decreases the
+elapsed time of the simulation. However, combining these variables and
+varying their values can either have conflicting effects on the elapsed time of
+the simulation or synergetic effects on the elapsed time of the simulation. For
+example, increasing the number of participating processes likely increases the
+elapsed time of the simulation, but can be greatly reduced if the distace the
+processes travel is greatly increased, causing processes to come within range of
+themselves and the base station frequently. Similarly, decreasing the range of
+communication likely decreases the elapsed time of the simulation, but
+but can be greatly increased if the distance the processes travel is greatly
+increased, causing processes to come within range of themselves and the base
+station infrequently. The combined effects of varying the values of each of
+these variables goes on exhaustively.
+
+## Possible improvements
+
+Increasing the buffer size of the processes would likely yield an improvement
+in elapsed time and number of data packet transmissions due to the likelihood
+of data packets being delivered to the base station faster as a result of
+processes having the capacity to carry more data packets in scenarios in which
+the number of participating processes is high.
+
+Increasing the number of base stations would likely yield an improvement in
+elapsed time and number of data packet transmissions due to the likelihood
+of the data packets being delivered to one of the base stations faster as a 
+result of participating processes being more likely to come within range of at
+least one of the base stations to deliver each of its carried data packets.
