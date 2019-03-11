@@ -219,19 +219,18 @@ int main(int argc, char* argv[]) {
                 recv(procFd, message, MSG_SIZE, 0);
 
                 /* Print the reception */
-                printf("received process %d's data from process %d\n", (int) message[0], cProc->id);
+                pid = (int) message[0];
+                printf("received process %d's data from process %d\n", pid, cProc->id);
 
                 /* Buffer given packet */
                 for (c = 0; c < N; c += 1) {
-                    cProc = pProcs[c];
-
-                    if (cProc == NULL) {
+                    nProc = pProcs[c];
+                    if (nProc == NULL) {
                         continue;
                     }
 
-                    pid = (int) message[0];
-                    if (pid == cProc->id) {
-                        if (cProc->data == NULL) {
+                    if (pid == nProc->id) {
+                        if (nProc->data == NULL) {
                             temp = calloc(MSG_SIZE, sizeof(char));
                             if (temp == NULL) {
                                 printf("logger: failed to allocate necessary memory\n");
@@ -239,7 +238,7 @@ int main(int argc, char* argv[]) {
                             }
 
                             sprintf(temp, "%s", &message[1]);
-                            cProc->data = temp;
+                            nProc->data = temp;
                             pCount += 1;
                             break;
                         }
@@ -262,6 +261,7 @@ int main(int argc, char* argv[]) {
                     continue;
                 }
 
+                /* Share contact information */
                 if (in_range(&cProc->loc, &nProc->loc, T)) {
                     memset(message, 0, MSG_SIZE);
                     message[0] = (char) nProc->id;
