@@ -258,34 +258,6 @@ process is in range of base station
 
 -----
 
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (453, 643)
-process is in range of base station
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (382, 457)
-process is in range of base station
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (183, 454)
-process is out of range of base station
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (78, 623)
-process is out of range of base station
-
------
-
 logger: connected to process 1
 process address: tux5.usask.ca, process port: 30031
 process located at coordinates (384, 887)
@@ -295,9 +267,8 @@ process is out of range of base station
 
 logger: connected to process 0
 process address: tux5.usask.ca, process port: 30030
-process located at coordinates (156, 807)
-process is out of range of base station
-logger: packet originating from 1 exchanged between 1 and 0
+process located at coordinates (453, 643)
+process is in range of base station
 
 -----
 
@@ -311,8 +282,8 @@ received process 1's data from process 1
 
 logger: connected to process 0
 process address: tux5.usask.ca, process port: 30030
-process located at coordinates (284, 960)
-process is out of range of base station
+process located at coordinates (382, 457)
+process is in range of base station
 
 -----
 
@@ -320,121 +291,19 @@ logger: connected to process 1
 process address: tux5.usask.ca, process port: 30031
 process located at coordinates (390, 890)
 process is out of range of base station
-logger: packet originating from 1 exchanged between 0 and 1
 
 -----
 
 logger: connected to process 0
 process address: tux5.usask.ca, process port: 30030
-process located at coordinates (246, 764)
+process located at coordinates (183, 454)
 process is out of range of base station
-logger: packet originating from 1 exchanged between 0 and 1
-logger: packet originating from 1 exchanged between 1 and 0
 
 -----
 
 logger: connected to process 1
 process address: tux5.usask.ca, process port: 30031
 process located at coordinates (312, 926)
-process is out of range of base station
-logger: packet originating from 1 exchanged between 1 and 0
-logger: packet originating from 1 exchanged between 0 and 1
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (62, 686)
-process is out of range of base station
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (132, 734)
-process is out of range of base station
-logger: packet originating from 1 exchanged between 0 and 1
-logger: packet originating from 1 exchanged between 1 and 0
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (396, 745)
-process is in range of base station
-received process 1's data from process 1
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (232, 907)
-process is out of range of base station
-logger: packet originating from 1 exchanged between 0 and 1
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (258, 602)
-process is in range of base station
-received process 1's data from process 1
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (349, 746)
-process is in range of base station
-received process 1's data from process 0
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (453, 643)
-process is in range of base station
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (472, 903)
-process is out of range of base station
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (382, 457)
-process is in range of base station
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (329, 959)
-process is out of range of base station
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (183, 454)
-process is out of range of base station
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (264, 770)
-process is out of range of base station
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (78, 623)
 process is out of range of base station
 
 -----
@@ -443,23 +312,30 @@ logger: connected to process 2
 process address: tux5.usask.ca, process port: 30032
 process located at coordinates (384, 887)
 process is out of range of base station
-logger: packet originating from 2 exchanged between 2 and 0
+logger: packet originating from 2 exchanged between 2 and 1
 
 -----
 
 logger: connected to process 0
 process address: tux5.usask.ca, process port: 30030
-process located at coordinates (462, 797)
-process is in range of base station
-received process 2's data from process 0
+process located at coordinates (78, 623)
+process is out of range of base station
 
 -----
 
 logger: connected to process 1
 process address: tux5.usask.ca, process port: 30031
+process located at coordinates (396, 745)
+process is in range of base station
+received process 2's data from process 1
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30030
 process located at coordinates (156, 807)
 process is out of range of base station
-logger: packet originating from 2 exchanged between 2 and 1
+logger: packet originating from 2 exchanged between 2 and 0
 
 -----
 
@@ -471,18 +347,24 @@ received process 2's data from process 2
 
 -----
 
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30031
+process located at coordinates (258, 602)
+process is in range of base station
+
+-----
+
 logger: connected to process 0
 process address: tux5.usask.ca, process port: 30030
-process located at coordinates (472, 996)
+process located at coordinates (284, 960)
 process is out of range of base station
 
 -----
 
 logger: connected to process 1
 process address: tux5.usask.ca, process port: 30031
-process located at coordinates (284, 960)
-process is out of range of base station
-logger: packet originating from 2 exchanged between 1 and 0
+process located at coordinates (453, 643)
+process is in range of base station
 
 -----
 
@@ -492,13 +374,12 @@ process located at coordinates (390, 890)
 process is out of range of base station
 logger: packet originating from 2 exchanged between 0 and 2
 logger: packet originating from 2 exchanged between 2 and 1
-logger: packet originating from 2 exchanged between 1 and 2
 
 -----
 
 logger: connected to process 0
 process address: tux5.usask.ca, process port: 30030
-process located at coordinates (543, 818)
+process located at coordinates (246, 764)
 process is out of range of base station
 logger: packet originating from 2 exchanged between 0 and 1
 logger: packet originating from 2 exchanged between 1 and 0
@@ -509,112 +390,9 @@ logger: packet originating from 2 exchanged between 2 and 0
 
 logger: connected to process 1
 process address: tux5.usask.ca, process port: 30031
-process located at coordinates (246, 764)
-process is out of range of base station
-logger: packet originating from 2 exchanged between 1 and 2
-logger: packet originating from 2 exchanged between 2 and 1
-
------
-
-logger: connected to process 2
-process address: tux5.usask.ca, process port: 30032
-process located at coordinates (312, 926)
-process is out of range of base station
-logger: packet originating from 2 exchanged between 2 and 0
-logger: packet originating from 2 exchanged between 0 and 2
-logger: packet originating from 2 exchanged between 2 and 1
-logger: packet originating from 2 exchanged between 1 and 2
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (636, 994)
-process is out of range of base station
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (62, 686)
-process is out of range of base station
-
------
-
-logger: connected to process 2
-process address: tux5.usask.ca, process port: 30032
-process located at coordinates (396, 745)
-process is in range of base station
-received process 2's data from process 2
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (440, 972)
-process is out of range of base station
-logger: packet originating from 2 exchanged between 0 and 2
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (132, 734)
-process is out of range of base station
-logger: packet originating from 2 exchanged between 1 and 2
-logger: packet originating from 2 exchanged between 2 and 1
-
------
-
-logger: connected to process 2
-process address: tux5.usask.ca, process port: 30032
-process located at coordinates (258, 602)
-process is in range of base station
-received process 2's data from process 2
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (533, 852)
-process is out of range of base station
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (232, 907)
-process is out of range of base station
-
------
-
-logger: connected to process 2
-process address: tux5.usask.ca, process port: 30032
-process located at coordinates (453, 643)
-process is in range of base station
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (577, 658)
-process is in range of base station
-received process 2's data from process 0
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (349, 746)
-process is in range of base station
-received process 2's data from process 1
-
------
-
-logger: connected to process 2
-process address: tux5.usask.ca, process port: 30032
 process located at coordinates (382, 457)
 process is in range of base station
+received process 2's data from process 1
 
 -----
 
@@ -623,31 +401,41 @@ process address: tux5.usask.ca, process port: 30033
 process located at coordinates (384, 887)
 process is out of range of base station
 logger: packet originating from 3 exchanged between 3 and 0
-logger: packet originating from 3 exchanged between 3 and 1
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (697, 499)
-process is in range of base station
-received process 3's data from process 0
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (472, 903)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 1 and 3
-logger: packet originating from 3 exchanged between 3 and 1
+logger: packet originating from 2 exchanged between 0 and 3
+logger: packet originating from 3 exchanged between 3 and 2
+logger: packet originating from 2 exchanged between 3 and 2
+logger: packet originating from 2 exchanged between 2 and 3
 
 -----
 
 logger: connected to process 2
 process address: tux5.usask.ca, process port: 30032
+process located at coordinates (312, 926)
+process is out of range of base station
+logger: packet originating from 2 exchanged between 2 and 0
+logger: packet originating from 3 exchanged between 2 and 0
+logger: packet originating from 2 exchanged between 0 and 2
+logger: packet originating from 3 exchanged between 0 and 2
+logger: packet originating from 2 exchanged between 2 and 3
+logger: packet originating from 3 exchanged between 2 and 3
+logger: packet originating from 3 exchanged between 3 and 2
+logger: packet originating from 2 exchanged between 3 and 2
+
+-----
+
+logger: connected to process 0
+process address: tux5.usask.ca, process port: 30030
+process located at coordinates (62, 686)
+process is out of range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30031
 process located at coordinates (183, 454)
 process is out of range of base station
+logger: packet originating from 2 exchanged between 0 and 1
+logger: packet originating from 3 exchanged between 0 and 1
 
 -----
 
@@ -656,190 +444,29 @@ process address: tux5.usask.ca, process port: 30033
 process located at coordinates (474, 709)
 process is in range of base station
 received process 3's data from process 3
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (811, 662)
-process is out of range of base station
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (329, 959)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 1 and 3
+received process 2's data from process 3
 
 -----
 
 logger: connected to process 2
 process address: tux5.usask.ca, process port: 30032
-process located at coordinates (78, 623)
-process is out of range of base station
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (982, 559)
-process is out of range of base station
-
------
-
-logger: connected to process 3
-process address: tux5.usask.ca, process port: 30033
-process located at coordinates (390, 890)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 3 and 1
-logger: packet originating from 3 exchanged between 1 and 3
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (264, 770)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 1 and 2
-logger: packet originating from 3 exchanged between 1 and 3
-logger: packet originating from 3 exchanged between 3 and 1
-
------
-
-logger: connected to process 2
-process address: tux5.usask.ca, process port: 30032
-process located at coordinates (156, 807)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 2 and 1
-logger: packet originating from 3 exchanged between 1 and 2
-logger: packet originating from 3 exchanged between 2 and 3
-logger: packet originating from 3 exchanged between 3 and 2
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (792, 620)
-process is out of range of base station
-
------
-
-logger: connected to process 3
-process address: tux5.usask.ca, process port: 30033
-process located at coordinates (312, 926)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 3 and 1
-logger: packet originating from 3 exchanged between 1 and 3
-logger: packet originating from 3 exchanged between 3 and 2
-logger: packet originating from 3 exchanged between 2 and 3
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (462, 797)
-process is in range of base station
-received process 3's data from process 1
-
------
-
-logger: connected to process 2
-process address: tux5.usask.ca, process port: 30032
-process located at coordinates (284, 960)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 2 and 1
-logger: packet originating from 3 exchanged between 2 and 3
-logger: packet originating from 3 exchanged between 3 and 2
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (982, 559)
-process is out of range of base station
-
------
-
-logger: connected to process 3
-process address: tux5.usask.ca, process port: 30033
 process located at coordinates (396, 745)
 process is in range of base station
-received process 3's data from process 3
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (472, 996)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 1 and 2
-logger: packet originating from 3 exchanged between 2 and 1
-logger: packet originating from 3 exchanged between 1 and 3
-
------
-
-logger: connected to process 2
-process address: tux5.usask.ca, process port: 30032
-process located at coordinates (246, 764)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 2 and 3
-logger: packet originating from 3 exchanged between 3 and 2
+received process 2's data from process 2
+received process 3's data from process 2
 
 -----
 
 logger: connected to process 0
 process address: tux5.usask.ca, process port: 30030
-process located at coordinates (834, 692)
+process located at coordinates (132, 734)
 process is out of range of base station
-
------
-
-logger: connected to process 3
-process address: tux5.usask.ca, process port: 30033
-process located at coordinates (258, 602)
-process is in range of base station
-received process 3's data from process 3
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (543, 818)
-process is out of range of base station
-
------
-
-logger: connected to process 2
-process address: tux5.usask.ca, process port: 30032
-process located at coordinates (62, 686)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 2 and 3
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (663, 795)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 1 and 0
-
------
-
-logger: connected to process 3
-process address: tux5.usask.ca, process port: 30033
-process located at coordinates (453, 643)
-process is in range of base station
-received process 3's data from process 3
-
------
-
-logger: connected to process 1
-process address: tux5.usask.ca, process port: 30031
-process located at coordinates (636, 994)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 1 and 0
+logger: packet originating from 2 exchanged between 0 and 1
 logger: packet originating from 3 exchanged between 0 and 1
+logger: packet originating from 2 exchanged between 1 and 0
+logger: packet originating from 3 exchanged between 1 and 0
+logger: packet originating from 2 exchanged between 0 and 2
+logger: packet originating from 3 exchanged between 0 and 2
 
 -----
 
@@ -848,38 +475,57 @@ process address: tux5.usask.ca, process port: 30034
 process located at coordinates (384, 887)
 process is out of range of base station
 logger: packet originating from 4 exchanged between 4 and 0
+logger: packet originating from 2 exchanged between 0 and 4
 logger: packet originating from 3 exchanged between 0 and 4
-logger: packet originating from 4 exchanged between 4 and 1
-logger: packet originating from 3 exchanged between 4 and 1
-logger: packet originating from 3 exchanged between 1 and 4
+logger: packet originating from 4 exchanged between 4 and 2
+logger: packet originating from 2 exchanged between 4 and 2
+logger: packet originating from 3 exchanged between 4 and 2
+logger: packet originating from 2 exchanged between 2 and 4
+logger: packet originating from 3 exchanged between 2 and 4
 logger: packet originating from 4 exchanged between 4 and 3
+logger: packet originating from 2 exchanged between 4 and 3
+logger: packet originating from 3 exchanged between 4 and 3
+
+-----
+
+logger: connected to process 1
+process address: tux5.usask.ca, process port: 30031
+process located at coordinates (78, 623)
+process is out of range of base station
+logger: packet originating from 2 exchanged between 1 and 0
+logger: packet originating from 3 exchanged between 1 and 0
+logger: packet originating from 2 exchanged between 0 and 1
+logger: packet originating from 3 exchanged between 0 and 1
+logger: packet originating from 4 exchanged between 0 and 1
+
+-----
+
+logger: connected to process 3
+process address: tux5.usask.ca, process port: 30033
+process located at coordinates (390, 890)
+process is out of range of base station
+logger: packet originating from 4 exchanged between 3 and 2
+logger: packet originating from 2 exchanged between 3 and 2
+logger: packet originating from 3 exchanged between 3 and 2
+logger: packet originating from 2 exchanged between 2 and 3
+logger: packet originating from 3 exchanged between 2 and 3
+logger: packet originating from 4 exchanged between 2 and 3
+logger: packet originating from 4 exchanged between 3 and 4
+logger: packet originating from 2 exchanged between 3 and 4
+logger: packet originating from 3 exchanged between 3 and 4
+logger: packet originating from 4 exchanged between 4 and 3
+logger: packet originating from 2 exchanged between 4 and 3
 logger: packet originating from 3 exchanged between 4 and 3
 
 -----
 
 logger: connected to process 2
 process address: tux5.usask.ca, process port: 30032
-process located at coordinates (132, 734)
-process is out of range of base station
-logger: packet originating from 3 exchanged between 2 and 4
-logger: packet originating from 4 exchanged between 4 and 2
-logger: packet originating from 3 exchanged between 4 and 2
-
------
-
-logger: connected to process 0
-process address: tux5.usask.ca, process port: 30030
-process located at coordinates (830, 687)
-process is out of range of base station
-
------
-
-logger: connected to process 3
-process address: tux5.usask.ca, process port: 30033
-process located at coordinates (382, 457)
+process located at coordinates (258, 602)
 process is in range of base station
-received process 4's data from process 3
-received process 3's data from process 4
+received process 2's data from process 2
+received process 3's data from process 2
+received process 4's data from process 2
 
 -----
 
@@ -889,4 +535,4 @@ process 1 contained data msg 1
 process 2 contained data msg 2
 process 3 contained data msg 3
 process 4 contained data msg 4
-processes transmitted data 68 times over 65s
+processes transmitted data 57 times over 27s
