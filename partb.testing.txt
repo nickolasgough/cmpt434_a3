@@ -536,3 +536,1073 @@ process 2 contained data msg 2
 process 3 contained data msg 3
 process 4 contained data msg 4
 processes transmitted data 57 times over 27s
+
+
+## N = 7, T = 500, D = 300
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (384, 887)
+process is in range of base station
+received process 0's data from process 0
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (520, 620)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (394, 891)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (277, 833)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (403, 562)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (195, 347)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (488, 409)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (381, 129)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (82, 124)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (76, 378)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (193, 654)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (385, 883)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (328, 589)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (384, 887)
+process is in range of base station
+received process 1's data from process 1
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (52, 472)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (520, 620)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (239, 544)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (394, 891)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (389, 803)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (277, 833)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (565, 561)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (403, 562)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (749, 797)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (384, 887)
+process is in range of base station
+received process 2's data from process 2
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (195, 347)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (534, 995)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (520, 620)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (488, 409)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (437, 712)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (394, 891)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (381, 129)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (734, 753)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (277, 833)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (82, 124)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (749, 948)
+process is out of range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (403, 562)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (76, 378)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (856, 772)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (195, 347)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (384, 887)
+process is in range of base station
+received process 3's data from process 3
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (193, 654)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (996, 964)
+process is out of range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (488, 409)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (520, 620)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (385, 883)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (701, 984)
+process is out of range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (381, 129)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (394, 891)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (328, 589)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (841, 752)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (82, 124)
+process is out of range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (277, 833)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (52, 472)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (908, 460)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (76, 378)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (403, 562)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (239, 544)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (195, 347)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (912, 221)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (193, 654)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (389, 803)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (916, 466)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (488, 409)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (385, 883)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (565, 561)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (827, 312)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (381, 129)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (328, 589)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (749, 797)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (542, 404)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (82, 124)
+process is out of range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (52, 472)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (534, 995)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (827, 312)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (76, 378)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (239, 544)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (437, 712)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (605, 512)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (193, 654)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (389, 803)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (734, 753)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (348, 666)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (385, 883)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (749, 948)
+process is out of range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (565, 561)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (599, 503)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (328, 589)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (749, 797)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (856, 772)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (686, 789)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (52, 472)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (534, 995)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (996, 964)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (974, 871)
+process is out of range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (239, 544)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (437, 712)
+process is in range of base station
+
+-----
+
+logger: connected to process 4
+process address: tux7.usask.ca, process port: 30054
+process located at coordinates (384, 887)
+process is in range of base station
+received process 4's data from process 4
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (701, 984)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (717, 717)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (389, 803)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (734, 753)
+process is in range of base station
+
+-----
+
+logger: connected to process 4
+process address: tux7.usask.ca, process port: 30054
+process located at coordinates (520, 620)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (841, 752)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (953, 533)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (565, 561)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (749, 948)
+process is out of range of base station
+
+-----
+
+logger: connected to process 4
+process address: tux7.usask.ca, process port: 30054
+process located at coordinates (394, 891)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (940, 813)
+process is out of range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (908, 460)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (749, 797)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (856, 772)
+process is in range of base station
+
+-----
+
+logger: connected to process 4
+process address: tux7.usask.ca, process port: 30054
+process located at coordinates (277, 833)
+process is in range of base station
+
+-----
+
+logger: connected to process 5
+process address: tux7.usask.ca, process port: 30055
+process located at coordinates (384, 887)
+process is in range of base station
+received process 5's data from process 5
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (793, 677)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (912, 221)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (534, 995)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (996, 964)
+process is out of range of base station
+
+-----
+
+logger: connected to process 4
+process address: tux7.usask.ca, process port: 30054
+process located at coordinates (403, 562)
+process is in range of base station
+
+-----
+
+logger: connected to process 5
+process address: tux7.usask.ca, process port: 30055
+process located at coordinates (520, 620)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (747, 381)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (916, 466)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (437, 712)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (701, 984)
+process is out of range of base station
+
+-----
+
+logger: connected to process 5
+process address: tux7.usask.ca, process port: 30055
+process located at coordinates (394, 891)
+process is in range of base station
+
+-----
+
+logger: connected to process 4
+process address: tux7.usask.ca, process port: 30054
+process located at coordinates (195, 347)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (602, 643)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (827, 312)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (734, 753)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (841, 752)
+process is in range of base station
+
+-----
+
+logger: connected to process 5
+process address: tux7.usask.ca, process port: 30055
+process located at coordinates (277, 833)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (542, 404)
+process is in range of base station
+
+-----
+
+logger: connected to process 4
+process address: tux7.usask.ca, process port: 30054
+process located at coordinates (488, 409)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (530, 934)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (749, 948)
+process is out of range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (908, 460)
+process is in range of base station
+
+-----
+
+logger: connected to process 5
+process address: tux7.usask.ca, process port: 30055
+process located at coordinates (403, 562)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (827, 312)
+process is in range of base station
+
+-----
+
+logger: connected to process 4
+process address: tux7.usask.ca, process port: 30054
+process located at coordinates (381, 129)
+process is in range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (806, 817)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (856, 772)
+process is in range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (912, 221)
+process is in range of base station
+
+-----
+
+logger: connected to process 5
+process address: tux7.usask.ca, process port: 30055
+process located at coordinates (195, 347)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (605, 512)
+process is in range of base station
+
+-----
+
+logger: connected to process 4
+process address: tux7.usask.ca, process port: 30054
+process located at coordinates (82, 124)
+process is out of range of base station
+
+-----
+
+logger: connected to process 0
+process address: tux7.usask.ca, process port: 30050
+process located at coordinates (528, 929)
+process is in range of base station
+
+-----
+
+logger: connected to process 3
+process address: tux7.usask.ca, process port: 30053
+process located at coordinates (996, 964)
+process is out of range of base station
+
+-----
+
+logger: connected to process 2
+process address: tux7.usask.ca, process port: 30052
+process located at coordinates (916, 466)
+process is in range of base station
+
+-----
+
+logger: connected to process 5
+process address: tux7.usask.ca, process port: 30055
+process located at coordinates (488, 409)
+process is in range of base station
+
+-----
+
+logger: connected to process 1
+process address: tux7.usask.ca, process port: 30051
+process located at coordinates (348, 666)
+process is in range of base station
+
+-----
+
+logger: connected to process 6
+process address: tux7.usask.ca, process port: 30056
+process located at coordinates (384, 887)
+process is in range of base station
+received process 6's data from process 6
+
+-----
+
+logger: epidemic simulation complete
+process 0 contained data msg 0
+process 1 contained data msg 1
+process 2 contained data msg 2
+process 3 contained data msg 3
+process 4 contained data msg 4
+process 5 contained data msg 5
+process 6 contained data msg 6
+processes transmitted data 0 times over 79s
