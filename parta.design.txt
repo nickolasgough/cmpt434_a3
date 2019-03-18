@@ -303,3 +303,11 @@ elapsed time and number of data packet transmissions due to the likelihood
 of the data packets being delivered to one of the base stations faster as a 
 result of participating processes being more likely to come within range of at
 least one of the base stations to deliver each of its carried data packets.
+
+Finally, modifying the protocols used to exchange data packets amongst
+processes could yield a faster simulation time with fewer transmissions between
+the processes and the logger. If the protocols were designed to exchange the
+processes' carried data packets in one message, much fewer transmissions would
+be necessary between the processes and the logger. This approach would include
+sending multiple data packets in one message and would decrease simulation time
+by decreasing the amount of time spent exchanging data packets.
