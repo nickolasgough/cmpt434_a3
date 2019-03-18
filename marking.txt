@@ -1,7 +1,0 @@
-
-
-Notes:
-
-    - Exceptional job justifying your architecture. Your arguments
-      were articulated well. I like your choice of architecture.
-    - Why can't the network features fit into a single layer?
